@@ -1,0 +1,34 @@
+{
+    "name": "hexakill-cli",
+    "version": "0.0.2",
+    "license": "GPL-3.0",
+    "description": "Hexakill game version for command line",
+    "keywords": [
+        "game",
+        "cli",
+        "javascript"
+    ],
+    "author": {
+        "name": "dawichi",
+        "url": "https://dawichi.dev"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dawichi/hexakill-cli.git"
+    },
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "node ./src",
+        "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}"
+    },
+    "dependencies": {
+        "chalk": "4.1.2",
+        "chalk-animation": "1.6.0",
+        "figlet": "1.5.2",
+        "gradient-string": "2.0.0",
+        "inquirer": "8.2.0",
+        "nanospinner": "1.0.0",
+        "prettier": "2.5.1"
+    }
+}
