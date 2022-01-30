@@ -16,9 +16,6 @@
         "type": "git",
         "url": "https://github.com/dawichi/hexakill-cli.git"
     },
-	"publishConfig": {
-		"registry":"https://npm.pkg.github.com"
-	  },
     "type": "module",
 	"main": "/src/index.js",
     "scripts": {
