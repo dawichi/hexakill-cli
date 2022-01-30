@@ -14,68 +14,18 @@ import gradient from 'gradient-string'
 import chalkAnimation from 'chalk-animation'
 import figlet from 'figlet'
 import nanospinner from 'nanospinner'
-
-class character {
-    constructor(name, level = 1) {
-        this.name = name
-        this.level = level
-        this.dmgRecieved = 0
-        this.health = 200
-        this.ability_power = 60
-        this.attack_damage = 20
-        this.magic_resist = 25
-        this.armor = 25
-    }
-
-    upLevel() {
-        if (this.level < 18) {
-            this.level++
-            this.health += 40
-            this.ability_power += 15
-            this.attack_damage += 10
-            this.magic_resist += 3
-            this.armor += 3
-        }
-    }
-
-    getDamage(damage) {
-        if (this.dmgRecieved + damage >= this.health) {
-            this.dmgRecieved = this.health
-        } else {
-            this.dmgRecieved += damage
-        }
-    }
-
-    passive() {}
-
-    attack() {
-        console.log('defend')
-    }
-
-    defend() {
-        console.log('defend')
-    }
-
-    skillshot() {
-        console.log('skillshot')
-    }
-
-    ultimate() {
-        console.log('ultimate')
-    }
-}
-
-const sleep = (ms = 2000) => new Promise(r => setTimeout(r, ms))
+import { Character } from './character.js'
+import { printStats, sleep } from './utils.js'
 
 let player
 
 const welcome = async () => {
-    const title = chalkAnimation.glitch('Welcome to hexakill CLI!')
-    await sleep()
-    const subtitle = chalkAnimation.radar('0101 0100101 10 101010 1 101')
-    await sleep()
-    title.stop()
-    subtitle.stop()
+    // const title = chalkAnimation.glitch('Welcome to hexakill CLI!')
+    // await sleep()
+    // const subtitle = chalkAnimation.radar('0101 0100101 10 101010 1 101')
+    // await sleep()
+    // title.stop()
+    // subtitle.stop()
 
     console.log(`
 		${chalk.bgGreen(chalk.black(' HOW TO PLAY: '))} 
@@ -84,65 +34,74 @@ const welcome = async () => {
 		the correct items for your champ to improve it's stats
 	`)
 
-    const ask_name = await inquirer.prompt({
-        name: 'player_name',
-        type: 'input',
-        message: 'What is your name?',
-        default() {
-            return 'Player'
-        },
-    })
+    // const ask_name = await inquirer.prompt({
+    //     name: 'player_name',
+    //     type: 'input',
+    //     message: 'What is your name?',
+    //     default() {
+    //         return 'Player'
+    //     },
+    // })
 
-    player = new character(ask_name.player_name)
+    // player = new character(ask_name.player_name)
+    player = new Character('daw')
 
     console.clear()
-    console.log(`
-		Welcome ${chalk.red(player.name)} to hexakill CLI!
-		First, you must pick your champ:
-	`)
+    console.log(`Hey ${chalk.red(player.name)}! Welcome to hexakill! \nFirst, meet your initial stats:`)
+    printStats(player)
+    console.log('Before start, you must decide the build you would like to follow this time!')
 
-    const champs = await inquirer.prompt({
-        name: 'champ_select',
+    const options = [
+        `${chalk.red('Attack Damage:')} always hits, always works`,
+        `${chalk.blue('Ability Power:')} let\'s blow them up!`,
+        `${chalk.magenta('Mixed damage:')} why not... both?`,
+    ]
+
+    const powerups = await inquirer.prompt({
+        name: 'powerup',
         type: 'list',
-        message: 'Which one would you like to use?',
-        choices: ['Alex  (AP, healer)', 'Bruno (AD, bleeding)'],
+        message: 'What stat would you like to powerup?',
+        choices: options,
     })
 
-    console.log(champs.champ_select)
-    player.champ = champs.champ_select
-}
+    console.log('-------------------------------------------')
 
-const printStats = () => {
-    console.log(`
-		AD
-	`)
-}
+    const option_idx = options.indexOf(powerups.powerup)
 
-async function handleAnswer(isCorrect) {
-    const spinner = nanospinner.createSpinner('Checking answer...').start()
-    await sleep()
-
-    if (isCorrect) {
-        spinner.success({ text: `success` })
-    } else {
-        spinner.error({ text: `nop ;(` })
-        process.exit(1)
+    switch (option_idx) {
+        case 0:
+            console.log('+30 AD!')
+            console.log(`${player.ad} => ${player.ad + 40}`)
+            player.ad += 30
+            break
+        case 1:
+            console.log('+40 AP!')
+            console.log(`${player.ap} => ${player.ap + 50}`)
+            player.ap += 40
+            break
+        case 2:
+            console.log('+15 AD and +20AP!')
+            console.log(`AD: ${player.ad} => ${player.ad + 15}`)
+            console.log(`AP: ${player.ap} => ${player.ap + 20}`)
+            player.ad += 15
+            player.ap += 20
+            break
+        default:
+            break
     }
-}
 
-const winner = () => {
-    console.clear()
-    figlet(`Congrats , ${player.name}`, (err, data) => {
-        console.log(gradient.pastel.multiline(data) + '\n')
-        console.log(chalk.green(`Programming isn't about what you know; it's about making the command line look cool`))
-        process.exit(0)
-    })
+    console.log('-------------------------------------------')
+
+    console.log('Get ready...')
+    await sleep()
+    console.log('The game is about to start')
+    await sleep()
 }
 
 const run = async () => {
     console.clear()
     await welcome()
-    winner()
+    while (true) {}
 }
 
 run()

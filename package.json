@@ -19,7 +19,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "start": "node ./src",
+        "start": "node ./src/index.js",
         "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}"
     },
     "dependencies": {
