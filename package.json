@@ -20,6 +20,7 @@
 		"registry":"https://npm.pkg.github.com"
 	  },
     "type": "module",
+	"main": "/src/index.js",
     "scripts": {
         "start": "node ./src/index.js",
         "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}"
