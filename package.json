@@ -16,7 +16,6 @@
         "type": "git",
         "url": "https://github.com/dawichi/hexakill-cli.git"
     },
-    "private": true,
     "type": "module",
     "scripts": {
         "start": "node ./src/index.js",
