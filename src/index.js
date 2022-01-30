@@ -14,18 +14,19 @@ import gradient from 'gradient-string'
 import chalkAnimation from 'chalk-animation'
 import figlet from 'figlet'
 import nanospinner from 'nanospinner'
-import { Character } from './character.js'
+import { Character } from './entities/character.js'
 import { printStats, sleep } from './utils.js'
+import { Slime } from './entities/enemy.js'
 
 let player
 
 const welcome = async () => {
-    // const title = chalkAnimation.glitch('Welcome to hexakill CLI!')
-    // await sleep()
-    // const subtitle = chalkAnimation.radar('0101 0100101 10 101010 1 101')
-    // await sleep()
-    // title.stop()
-    // subtitle.stop()
+    const title = chalkAnimation.glitch('Welcome to hexakill CLI!')
+    await sleep()
+    const subtitle = chalkAnimation.radar('0101 0100101 10 101010 1 101')
+    await sleep()
+    title.stop()
+    subtitle.stop()
 
     console.log(`
 		${chalk.bgGreen(chalk.black(' HOW TO PLAY: '))} 
@@ -34,17 +35,16 @@ const welcome = async () => {
 		the correct items for your champ to improve it's stats
 	`)
 
-    // const ask_name = await inquirer.prompt({
-    //     name: 'player_name',
-    //     type: 'input',
-    //     message: 'What is your name?',
-    //     default() {
-    //         return 'Player'
-    //     },
-    // })
+    const ask_name = await inquirer.prompt({
+        name: 'player_name',
+        type: 'input',
+        message: 'What is your name?',
+        default() {
+            return 'Player'
+        },
+    })
 
-    // player = new character(ask_name.player_name)
-    player = new Character('daw')
+    player = new Character(ask_name.player_name)
 
     console.clear()
     console.log(`Hey ${chalk.red(player.name)}! Welcome to hexakill! \nFirst, meet your initial stats:`)
@@ -98,10 +98,18 @@ const welcome = async () => {
     await sleep()
 }
 
+const fight = async () => {
+    const enemie = new Slime()
+
+    console.log(`Careful! One ${enemie.name} has appeared!`)
+    console.log(enemie.attack())
+}
+
 const run = async () => {
     console.clear()
-    await welcome()
-    while (true) {}
+    // await welcome()
+    console.clear()
+    await fight()
 }
 
 run()

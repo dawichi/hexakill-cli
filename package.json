@@ -17,7 +17,7 @@
         "url": "https://github.com/dawichi/hexakill-cli.git"
     },
     "type": "module",
-	"main": "/src/index.js",
+    "main": "/src/index.js",
     "scripts": {
         "start": "node ./src/index.js",
         "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}"
