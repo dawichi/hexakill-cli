@@ -21,7 +21,7 @@ export const printStats = player =>
         exp: player.exp,
     })
 
-export const compareStats = (player, enemie) =>
+export const compareStats = (player, enemy) =>
     console.table([
         {
             name: player.name,
@@ -34,13 +34,13 @@ export const compareStats = (player, enemie) =>
             exp: player.exp,
         },
         {
-            name: enemie.name,
-            level: enemie.level,
-            health: `${enemie.health - enemie.dmgRecieved}/${enemie.health}`,
-            AD: enemie.ad,
-            AP: enemie.ap,
-            armor: enemie.armor,
-            MR: enemie.mr,
-            exp: enemie.exp,
+            name: enemy.name,
+            level: enemy.level,
+            health: `${enemy.health - enemy.dmgRecieved}/${enemy.health}`,
+            AD: enemy.ad,
+            AP: enemy.ap,
+            armor: enemy.armor,
+            MR: enemy.mr,
+            exp: enemy.exp,
         },
     ])
