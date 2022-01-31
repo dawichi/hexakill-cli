@@ -55,7 +55,7 @@ const enemy_action = async (player: Character, enemy: Slime) => {
     const choice = enemy_action_generator < 0.33 ? 0 : enemy_action_generator < 0.66 ? 1 : 2
 
     console.log('Enemy is thinking...')
-    await sleep()
+    await sleep(1000)
 
     if (choice === 0) {
         console.log(`The ${tint(enemy.name, 'bgRed')} is going to ${chalk.red('attack')}!`)
@@ -81,7 +81,7 @@ const enemy_action = async (player: Character, enemy: Slime) => {
         console.log('Enemy healed!')
         console.log('Healed: ' + enemy.heal())
     }
-    await sleep(3000)
+    await sleep(1000)
     br()
 }
 

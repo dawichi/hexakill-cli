@@ -37,7 +37,7 @@ export const printStats = (player: Character) =>
         MR: player.mr,
         exp: `${player.exp}/100`,
     })
-
+  //TODO:don't show Index
 export const compareStats = (player: Character, enemy: Slime) =>
     console.table([
         {
@@ -58,6 +58,6 @@ export const compareStats = (player: Character, enemy: Slime) =>
             AP: enemy.ap,
             armor: enemy.armor,
             MR: enemy.mr,
-            exp: `${player.exp}/100`,
+            exp: ` - `,
         },
     ])

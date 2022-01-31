@@ -32,14 +32,14 @@ const fight = (player, enemy) => __awaiter(void 0, void 0, void 0, function* () 
         if (fight.won) {
             yield sleep(3000);
             console.clear();
-            const exp_gained = parseInt((enemy.health / player.level / 2).toFixed(0));
+            const exp_gained = parseInt(((enemy.health / player.level) * 2).toFixed(0));
             console.log(`\n\n\n Well played! You have gained ${chalk.green(exp_gained)}`);
             console.log(`${player.name} exp: ${player.exp}/100 => ${player.exp + exp_gained}/100 \n\n\n`);
             const levelup = player.gainExp(exp_gained);
             if (levelup) {
                 console.log(gradient.cristal.multiline(level_up(player)), 'You level up! Well done! ^^');
-                if (player.level > 18) {
-                    figlet('winner', (err, data) => {
+                if (player.level >= 18) {
+                    figlet(`winner, ${player.name}`, (err, data) => {
                         console.log(gradient.pastel.multiline(data) + '\n');
                         console.log(chalk.green(`Congrats ${player.name}! You have won hexakill!`));
                         process.exit(0);
@@ -63,7 +63,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
     let playing = true;
     while (playing) {
         const min_enemy_level = Math.floor(player.level / 2);
-        const max_enemy_level = player.level + 2;
+        const max_enemy_level = player.level * 2;
         const enemy_level = parseInt((Math.floor(Math.random() * (max_enemy_level - min_enemy_level + 1)) + min_enemy_level).toFixed(0));
         enemy = new Slime('Slime', enemy_level);
         // present the enemy

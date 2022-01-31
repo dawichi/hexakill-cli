@@ -57,7 +57,7 @@ const enemy_action = (player, enemy) => __awaiter(void 0, void 0, void 0, functi
     const enemy_action_generator = Math.random();
     const choice = enemy_action_generator < 0.33 ? 0 : enemy_action_generator < 0.66 ? 1 : 2;
     console.log('Enemy is thinking...');
-    yield sleep();
+    yield sleep(1000);
     if (choice === 0) {
         console.log(`The ${tint(enemy.name, 'bgRed')} is going to ${chalk.red('attack')}!`);
         const damage = enemy.attack();
@@ -86,7 +86,7 @@ const enemy_action = (player, enemy) => __awaiter(void 0, void 0, void 0, functi
         console.log('Enemy healed!');
         console.log('Healed: ' + enemy.heal());
     }
-    yield sleep(3000);
+    yield sleep(1000);
     br();
 });
 export const fight_turn = (player, enemy) => __awaiter(void 0, void 0, void 0, function* () {
