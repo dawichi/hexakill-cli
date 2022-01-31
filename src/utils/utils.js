@@ -3,20 +3,8 @@ import gradient from 'gradient-string'
 import figlet from 'figlet'
 import nanospinner from 'nanospinner'
 
-export const sleep = (ms = 2000) => new Promise(r => setTimeout(r, ms))
 
-export const printStats = player =>
-    console.table({
-        name: player.name,
-        level: player.level,
-        exp: player.exp,
-        health: `${player.health - player.dmgRecieved}/${player.health}`,
-        AD: player.ad,
-        AP: player.ap,
-        armor: player.armor,
-        MR: player.mr,
-    })
-
+// backup functions 
 async function handleAnswer(isCorrect) {
     const spinner = nanospinner.createSpinner('Checking answer...').start()
     await sleep()

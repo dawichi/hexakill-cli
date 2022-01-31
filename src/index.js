@@ -14,11 +14,15 @@ import gradient from 'gradient-string'
 import chalkAnimation from 'chalk-animation'
 import figlet from 'figlet'
 import nanospinner from 'nanospinner'
+
+import { br, compareStats, printStats, sleep, tint } from './utils/functions.js'
 import { Character } from './entities/character.js'
-import { printStats, sleep } from './utils.js'
 import { Slime } from './entities/enemy.js'
+import { actions, powerups } from './utils/choices.js'
+import { enemie_attack, player_attack } from './utils/fight.js'
 
 let player
+let enemie
 
 const welcome = async () => {
     const title = chalkAnimation.glitch('Welcome to hexakill CLI!')
@@ -51,22 +55,16 @@ const welcome = async () => {
     printStats(player)
     console.log('Before start, you must decide the build you would like to follow this time!')
 
-    const options = [
-        `${chalk.red('Attack Damage:')} always hits, always works`,
-        `${chalk.blue('Ability Power:')} let\'s blow them up!`,
-        `${chalk.magenta('Mixed damage:')} why not... both?`,
-    ]
-
-    const powerups = await inquirer.prompt({
+    const choice = await inquirer.prompt({
         name: 'powerup',
         type: 'list',
         message: 'What stat would you like to powerup?',
-        choices: options,
+        choices: powerups,
     })
 
     console.log('-------------------------------------------')
 
-    const option_idx = options.indexOf(powerups.powerup)
+    const option_idx = options.indexOf(choice.powerup)
 
     switch (option_idx) {
         case 0:
@@ -94,21 +92,55 @@ const welcome = async () => {
 
     console.log('Get ready...')
     await sleep()
-    console.log('The game is about to start')
+    console.log('The game is about to start ^^')
     await sleep()
 }
 
-const fight = async () => {
-    const enemie = new Slime()
 
-    console.log(`Careful! One ${enemie.name} has appeared!`)
-    console.log(enemie.attack())
+const fight = async () => {
+	console.log(`Careful! One ${tint(`${enemie.name} lv ${enemie.level}`, 'bgRed')} has appeared!`)
+	compareStats(player, enemie)
+	br()
+	await sleep()
+	fight_turn()
+}
+
+const fight_turn = async () => {
+	const action = await inquirer.prompt({
+		name: 'action',
+        type: 'list',
+        message: 'What would you like to do?',
+        choices: actions,
+    })
+	const choice = actions.indexOf(action.action)
+
+	switch (choice) {
+		case 0:
+			break;
+	
+		default:
+			break;
+	}
+	
+	
+    enemie_attack(player, enemie)
+    player_attack(player, enemie)
+	console.table({
+		enemie: '200/2000',
+        player: '4234',
+    })
+    await sleep()
+    enemie_attack(player, enemie)
+    player_attack(player, enemie)
+    br()
 }
 
 const run = async () => {
-    console.clear()
+	console.clear()
     // await welcome()
+    player = new Character('Dawichi')
     console.clear()
+	const enemie = new Slime()
     await fight()
 }
 
