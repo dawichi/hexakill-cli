@@ -6,8 +6,8 @@ export const enemie_attack = (player, enemie) => {
     damage === 0 ? console.log('His attack missed!') : console.log(`Slime made ${tint(damage, 'bgRed')} of damage!`)
 
     player.recieveAttack(damage)
-	console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
-	br()
+    console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
+    br()
 }
 
 export const player_attack = (player, enemie) => {
@@ -15,6 +15,6 @@ export const player_attack = (player, enemie) => {
     damage === 0 ? console.log('Your attack missed!') : console.log(`You made ${tint(damage, 'bgGreen', 'black')} of damage!`)
 
     enemie.recieveAttack(damage)
-	console.log(`${enemie.name} hp: ${tint(`${enemie.health - enemie.dmgRecieved} / ${enemie.health}`, 'bgRed')}`)
-	br()
+    console.log(`${enemie.name} hp: ${tint(`${enemie.health - enemie.dmgRecieved} / ${enemie.health}`, 'bgRed')}`)
+    br()
 }

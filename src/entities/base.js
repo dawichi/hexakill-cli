@@ -46,19 +46,19 @@ export class Base_Entity {
         }
     }
 
-	recieveAttack(damage) {
-		damage = parseInt(damage)
-		if (damage > this.armor) {
-			this._getDamage(damage - this.armor)
-		}
-	}
+    recieveAttack(damage) {
+        damage = parseInt(damage)
+        if (damage > this.armor) {
+            this._getDamage(damage - this.armor)
+        }
+    }
 
-	recieveMagic(damage) {
-		damage = parseInt(damage)
-		if (damage > this.mr) {
-			this._getDamage(damage - this.mr)
-		}
-	}
+    recieveMagic(damage) {
+        damage = parseInt(damage)
+        if (damage > this.mr) {
+            this._getDamage(damage - this.mr)
+        }
+    }
 
     attack() {
         // Range of damage, [80% to 140%] of AD
@@ -76,7 +76,7 @@ export class Base_Entity {
         return damage
     }
 
-	magic() {
+    magic() {
         // Range of damage, [30% to 200%] of AP
         const min_hit = this.ad * 0.3
         const max_hit = this.ad * 2
@@ -92,16 +92,16 @@ export class Base_Entity {
         return damage
     }
 
-	heal() {
+    heal() {
         // Range of heal, [30% to 60%] of total HP
-        const min_heal = this.health * 0.30
+        const min_heal = this.health * 0.3
         const max_heal = this.ad * 0.6
         // Calc heal between the range
         const heal = (Math.floor(Math.random() * (max_heal - min_heal + 1)) + min_heal).toFixed(0)
-		this.dmgRecieved -= heal
-		if (this.dmgRecieved < 0) {
-			this.dmgRecieved = 0
-		}
-		console.log('Healed: ' + heal)
-	}
+        this.dmgRecieved -= heal
+        if (this.dmgRecieved < 0) {
+            this.dmgRecieved = 0
+        }
+        console.log('Healed: ' + heal)
+    }
 }

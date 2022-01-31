@@ -104,36 +104,36 @@ const fight_turn = async (player, enemie) => {
     })
     const player_action = actions.indexOf(action.action)
 
-	// Generate the 33% random enemie action
+    // Generate the 33% random enemie action
     const enemie_action_generator = Math.random()
-	
-	if (player_action === 0) {
-		console.log('You are attacking!')
-		player_attack(player, enemie)
-	} else if (player_action === 1) {
-		console.log('You are using magic!')
-		player_attack(player, enemie)
-	} else {
-		player.heal()
-	}
-	
-	br()
-	console.log('Enemie is thinking...')
-	const enemie_action = enemie_action_generator < 0.33 ? 0 : enemie_action_generator < 0.66 ? 1 : 2
-	await sleep()
 
-	if (enemie_action === 0) {
-		console.log('He is attacking!')
-		enemie_attack(player, enemie)
-	} else if (player_action === 1) {
-		console.log('He is using magic!')
-		enemie_attack(player, enemie)
-	} else {
-		console.log('Enemie healed himself!')
-		enemie.heal()
-	}
+    if (player_action === 0) {
+        console.log('You are attacking!')
+        player_attack(player, enemie)
+    } else if (player_action === 1) {
+        console.log('You are using magic!')
+        player_attack(player, enemie)
+    } else {
+        player.heal()
+    }
 
-	console.log('\n\n\n\n')
+    br()
+    console.log('Enemie is thinking...')
+    const enemie_action = enemie_action_generator < 0.33 ? 0 : enemie_action_generator < 0.66 ? 1 : 2
+    await sleep()
+
+    if (enemie_action === 0) {
+        console.log('He is attacking!')
+        enemie_attack(player, enemie)
+    } else if (player_action === 1) {
+        console.log('He is using magic!')
+        enemie_attack(player, enemie)
+    } else {
+        console.log('Enemie healed himself!')
+        enemie.heal()
+    }
+
+    console.log('\n\n\n\n')
     compareStats(player, enemie)
 }
 
@@ -142,19 +142,19 @@ const run = async () => {
     await welcome()
     // player = new Character('Dawichi')
 
-	// present the enemie
+    // present the enemie
     const enemie = new Slime()
-	console.clear()
+    console.clear()
     console.log(`Careful! One ${tint(`${enemie.name} lv ${enemie.level}`, 'bgRed')} has appeared!`)
     compareStats(player, enemie)
     br()
     await sleep()
 
-	// init the combar
-	let playing = true
-	while (playing) {
-		await fight_turn(player, enemie)
-	}
+    // init the combat
+    let playing = true
+    while (playing) {
+        await fight_turn(player, enemie)
+    }
 }
 
 run()

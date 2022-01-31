@@ -3,8 +3,7 @@ import gradient from 'gradient-string'
 import figlet from 'figlet'
 import nanospinner from 'nanospinner'
 
-
-// backup functions 
+// backup functions
 async function handleAnswer(isCorrect) {
     const spinner = nanospinner.createSpinner('Checking answer...').start()
     await sleep()
