@@ -1,12 +1,13 @@
 import chalk from 'chalk'
 import chalkAnimation from 'chalk-animation'
 import inquirer from 'inquirer'
+
 import { Character } from '../entities/character.js'
 import { powerups } from '../utils/choices.js'
 import { br, pause, printStats, sleep, tint } from '../utils/functions.js'
 
 export const welcome = async () => {
-    let player
+    let player: Character
     const title = chalkAnimation.glitch('Welcome to hexakill CLI!')
     await sleep()
     const subtitle = chalkAnimation.radar('0101 0100101 10 101010 1 101')

@@ -1,7 +1,17 @@
-export const init_stat = (num, level) => num + num * level * 0.3
+export const init_stat = (num: number, level: number) => num + num * level * 0.3
 
 export class Base_Entity {
-    constructor(name, level) {
+	name: string
+	level: number
+	dmgRecieved: number
+	health: number
+	ad: number
+	ap: number
+	armor: number
+	mr: number
+	exp: number
+
+    constructor(name: string, level: number) {
         this.name = name
         this.level = level
         this.dmgRecieved = 0
@@ -24,7 +34,7 @@ export class Base_Entity {
         }
     }
 
-    gainExp(exp) {
+    gainExp(exp: number) {
         if (this.exp + exp > 100) {
             this._levelUp()
             this.exp += exp - 100
@@ -35,7 +45,7 @@ export class Base_Entity {
         }
     }
 
-    _getDamage(damage) {
+    _getDamage(damage: number) {
         if (this.dmgRecieved + damage >= this.health) {
             this.dmgRecieved = this.health
             // it's dead now
@@ -47,13 +57,13 @@ export class Base_Entity {
         }
     }
 
-    recieveAttack(damage) {
+    recieveAttack(damage: number) {
         if (damage > this.armor) {
             this._getDamage(damage - this.armor)
         }
     }
 
-    recieveMagic(damage) {
+    recieveMagic(damage: number) {
         if (damage > this.mr) {
             this._getDamage(damage - this.mr)
         }
@@ -101,6 +111,6 @@ export class Base_Entity {
         if (this.dmgRecieved < 0) {
             this.dmgRecieved = 0
         }
-        console.log('Healed: ' + heal)
+		return heal
     }
 }

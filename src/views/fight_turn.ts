@@ -4,11 +4,13 @@ import inquirer from 'inquirer'
 import { loser, winner } from './end.js'
 import { actions } from '../utils/choices.js'
 import { br, compareStats, sleep, tint } from '../utils/functions.js'
+import { Character } from '../entities/character.js'
+import { Slime } from '../entities/enemies.js'
 
 // TODO: refactor this file 
 
-const player_action = async (player, enemy) => {
-    console.log(`Hey ${tint(player.name, 'bgGreen')}, is your turn!`)
+const player_action = async (player: Character, enemy: Slime) => {
+    console.log(`Hey ${tint(player.name, 'bgGreen', 'black')}, is your turn!\n`)
 
     const action = await inquirer.prompt({
         name: 'action',
@@ -25,7 +27,7 @@ const player_action = async (player, enemy) => {
         if (damage === 0) {
             console.log('Your attack missed!')
         } else {
-            console.log(`You made ${tint(damage - enemy.armor, 'bgGreen', 'black')} of damage!`)
+            console.log(`You made ${tint((damage - enemy.armor).toString(), 'bgGreen', 'black')} of damage!`)
             enemy.recieveAttack(damage)
             console.log(`${enemy.name} hp: ${tint(`${enemy.health - enemy.dmgRecieved} / ${enemy.health}`, 'bgRed')}`)
         }
@@ -35,19 +37,19 @@ const player_action = async (player, enemy) => {
         if (damage === 0) {
             console.log('Your magic missed!')
         } else {
-            console.log(`You made ${tint(damage - enemy.mr, 'bgGreen', 'black')} of damage!`)
+            console.log(`You made ${tint((damage - enemy.mr).toString(), 'bgGreen', 'black')} of damage!`)
             enemy.recieveMagic(damage)
             console.log(`${enemy.name} hp: ${tint(`${enemy.health - enemy.dmgRecieved} / ${enemy.health}`, 'bgRed')}`)
         }
     } else {
         console.log('You healed!')
-        player.heal()
+        console.log('Healed: ' + player.heal())
     }
 
     br()
 }
 
-const enemy_action = async (player, enemy) => {
+const enemy_action = async (player: Character, enemy: Slime) => {
     // Generate a random enemy action with 33% chances in each option
     const enemy_action_generator = Math.random()
     const choice = enemy_action_generator < 0.33 ? 0 : enemy_action_generator < 0.66 ? 1 : 2
@@ -61,7 +63,7 @@ const enemy_action = async (player, enemy) => {
 		if (damage) {
 			console.log(`His ${chalk.red('attack')} missed!`)
 		} else {
-			console.log(`Slime made ${tint(damage - player.armor, 'bgRed')} of damage!`)
+			console.log(`Slime made ${tint((damage - player.armor).toString(), 'bgRed')} of damage!`)
 			player.recieveAttack(damage)
 			console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
 		}
@@ -71,19 +73,19 @@ const enemy_action = async (player, enemy) => {
 		if (damage === 0) {
 			console.log(`His ${chalk.blue('magic')} missed!`)
 		} else {
-			console.log(`Slime made ${tint(damage - player.mr, 'bgRed')} of damage!`)
+			console.log(`Slime made ${tint((damage - player.mr).toString(), 'bgRed')} of damage!`)
 			player.recieveMagic(damage)
 			console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
 		}
     } else {
         console.log('Enemy healed!')
-        enemy.heal()
+        console.log('Healed: ' + enemy.heal())
     }
     await sleep(3000)
     br()
 }
 
-export const fight_turn = async (player, enemy) => {
+export const fight_turn = async (player: Character, enemy: Slime) => {
     await player_action(player, enemy)
     if (enemy.health - enemy.dmgRecieved === 0) {
         winner(enemy)

@@ -9,12 +9,13 @@
 //     \|_______|    \|__|\|__|    \|____________|    \|__|    \|_______|    \|__|\|__|    \|__|
 
 import chalk from 'chalk'
+import figlet from 'figlet'
 import gradient from 'gradient-string'
+
 import { welcome } from './views/welcome.js'
 import { Slime } from './entities/enemies.js'
 import { fight_turn } from './views/fight_turn.js'
 import { br, compareStats, level_up, sleep, tint } from './utils/functions.js'
-import figlet from 'figlet'
 
 const fight = async (player, enemy) => {
     // init the combat
