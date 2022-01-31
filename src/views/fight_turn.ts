@@ -7,7 +7,7 @@ import { br, compareStats, sleep, tint } from '../utils/functions.js'
 import { Character } from '../entities/character.js'
 import { Slime } from '../entities/enemies.js'
 
-// TODO: refactor this file 
+// TODO: refactor this file
 
 const player_action = async (player: Character, enemy: Slime) => {
     console.log(`Hey ${tint(player.name, 'bgGreen', 'black')}, is your turn!\n`)
@@ -51,8 +51,19 @@ const player_action = async (player: Character, enemy: Slime) => {
 
 const enemy_action = async (player: Character, enemy: Slime) => {
     // Generate a random enemy action with 33% chances in each option
+
+    let choice: number
     const enemy_action_generator = Math.random()
-    const choice = enemy_action_generator < 0.33 ? 0 : enemy_action_generator < 0.66 ? 1 : 2
+
+    if (enemy.dmgRecieved / enemy.health < 0.2) {
+        // If less than 20% hp, always heals
+        choice = 2
+    } else if (enemy.dmgRecieved / enemy.health > 0.6) {
+        // If more than 60% hp, never heals
+        choice = enemy_action_generator < 0.5 ? 0 : 1
+    } else {
+        choice = enemy_action_generator < 0.33 ? 0 : enemy_action_generator < 0.66 ? 1 : 2
+    }
 
     console.log('Enemy is thinking...')
     await sleep(1000)
@@ -60,23 +71,23 @@ const enemy_action = async (player: Character, enemy: Slime) => {
     if (choice === 0) {
         console.log(`The ${tint(enemy.name, 'bgRed')} is going to ${chalk.red('attack')}!`)
         const damage = enemy.attack()
-		if (damage) {
-			console.log(`His ${chalk.red('attack')} missed!`)
-		} else {
-			console.log(`Slime made ${tint((damage - player.armor).toString(), 'bgRed')} of damage!`)
-			player.recieveAttack(damage)
-			console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
-		}
+        if (damage) {
+            console.log(`His ${chalk.red('attack')} missed!`)
+        } else {
+            console.log(`Slime made ${tint((damage - player.armor).toString(), 'bgRed')} of damage!`)
+            player.recieveAttack(damage)
+            console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
+        }
     } else if (choice === 1) {
         console.log(`The ${tint(enemy.name, 'bgRed')} is going to use ${chalk.blue('magic')}!`)
         const damage = enemy.magic()
-		if (damage === 0) {
-			console.log(`His ${chalk.blue('magic')} missed!`)
-		} else {
-			console.log(`Slime made ${tint((damage - player.mr).toString(), 'bgRed')} of damage!`)
-			player.recieveMagic(damage)
-			console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
-		}
+        if (damage === 0) {
+            console.log(`His ${chalk.blue('magic')} missed!`)
+        } else {
+            console.log(`Slime made ${tint((damage - player.mr).toString(), 'bgRed')} of damage!`)
+            player.recieveMagic(damage)
+            console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
+        }
     } else {
         console.log('Enemy healed!')
         console.log('Healed: ' + enemy.heal())
