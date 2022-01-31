@@ -1,4 +1,4 @@
-export const init_stat = (num, level) => num + num * level * 0.3;
+export const init_stat = (num, level) => parseInt((num * (Math.pow(1.2, level))).toFixed(0));
 export class Base_Entity {
     constructor(name, level) {
         this.name = name;
@@ -14,17 +14,23 @@ export class Base_Entity {
     _levelUp() {
         if (this.level < 18) {
             this.level++;
-            this.health += 200 * this.level * 0.1;
-            this.ad += 30 * this.level * 0.1;
-            this.ap += 40 * this.level * 0.1;
-            this.armor += 10 * this.level * 0.1;
-            this.mr += 10 * this.level * 0.1;
+            this.health = parseInt((this.health * 1.2).toFixed(0));
+            this.ad = parseInt((this.ad * 1.2).toFixed(0));
+            this.ap = parseInt((this.ap * 1.2).toFixed(0));
+            this.armor = parseInt((this.armor * 1.2).toFixed(0));
+            this.mr = parseInt((this.mr * 1.2).toFixed(0));
         }
     }
     gainExp(exp) {
-        if (this.exp + exp > 100) {
-            this._levelUp();
-            this.exp += exp - 100;
+        let exp_total = this.exp + exp;
+        if (exp_total > 100) {
+            while (true) {
+                this._levelUp();
+                exp_total -= 100;
+                if (exp_total < 100)
+                    break;
+            }
+            this.exp = exp_total;
             return true;
         }
         else {
@@ -34,14 +40,12 @@ export class Base_Entity {
     }
     _getDamage(damage) {
         if (this.dmgRecieved + damage >= this.health) {
-            this.dmgRecieved = this.health;
             // it's dead now
-            return true;
+            this.dmgRecieved = this.health;
         }
         else {
-            this.dmgRecieved += damage;
             // still alive
-            return false;
+            this.dmgRecieved += damage;
         }
     }
     recieveAttack(damage) {
@@ -73,8 +77,8 @@ export class Base_Entity {
     }
     magic() {
         // Range of damage, [30% to 200%] of AP
-        const min_hit = this.ad * 0.3;
-        const max_hit = this.ad * 2;
+        const min_hit = this.ap * 0.3;
+        const max_hit = this.ap * 2;
         // Calc damage between the range
         const damage = parseInt((Math.floor(Math.random() * (max_hit - min_hit + 1)) + min_hit).toFixed(0));
         // Calc the chances. 40% critic, 30% misses

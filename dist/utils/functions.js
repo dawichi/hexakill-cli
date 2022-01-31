@@ -38,6 +38,7 @@ export const printStats = (player) => console.table({
     MR: player.mr,
     exp: `${player.exp}/100`,
 });
+//TODO:don't show Index
 export const compareStats = (player, enemy) => console.table([
     {
         name: player.name,
@@ -57,7 +58,7 @@ export const compareStats = (player, enemy) => console.table([
         AP: enemy.ap,
         armor: enemy.armor,
         MR: enemy.mr,
-        exp: `${player.exp}/100`,
+        exp: ` - `,
     },
 ]);
 //# sourceMappingURL=functions.js.map
