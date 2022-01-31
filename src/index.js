@@ -92,6 +92,7 @@ const welcome = async () => {
     console.log('Get ready...')
     console.log('The game is about to start ^^')
     await sleep()
+    await sleep()
 }
 
 const fight_turn = async (player, enemie) => {
@@ -139,8 +140,8 @@ const fight_turn = async (player, enemie) => {
 
 const run = async () => {
     console.clear()
-    // await welcome()
-    player = new Character('Dawichi')
+    await welcome()
+    // player = new Character('Dawichi')
 
 	// present the enemie
     const enemie = new Slime()
