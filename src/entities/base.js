@@ -13,15 +13,6 @@ export class Base_Entity {
         this.exp = init_stat(0, level)
     }
 
-    gainExp(exp) {
-        if (this.exp + exp > 100) {
-            this._levelUp()
-            this.exp += exp - 100
-        } else {
-            this.exp += exp
-        }
-    }
-
     _levelUp() {
         if (this.level < 18) {
             this.level++
@@ -30,6 +21,15 @@ export class Base_Entity {
             this.ap += 40 * this.level * 0.1
             this.armor += 10 * this.level * 0.1
             this.mr += 10 * this.level * 0.1
+        }
+    }
+
+    gainExp(exp) {
+        if (this.exp + exp > 100) {
+            this._levelUp()
+            this.exp += exp - 100
+        } else {
+            this.exp += exp
         }
     }
 
@@ -47,11 +47,17 @@ export class Base_Entity {
     }
 
 	recieveAttack(damage) {
-		this._getDamage(parseInt(damage) - this.armor)
+		damage = parseInt(damage)
+		if (damage > this.armor) {
+			this._getDamage(damage - this.armor)
+		}
 	}
 
 	recieveMagic(damage) {
-		this._getDamage(parseInt(damage) - this.mr)
+		damage = parseInt(damage)
+		if (damage > this.mr) {
+			this._getDamage(damage - this.mr)
+		}
 	}
 
     attack() {

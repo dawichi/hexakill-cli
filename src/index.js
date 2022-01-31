@@ -69,12 +69,12 @@ const welcome = async () => {
     switch (option_idx) {
         case 0:
             console.log('+30 AD!')
-            console.log(`${player.ad} => ${player.ad + 40}`)
+            console.log(`${player.ad} => ${player.ad + 30}`)
             player.ad += 30
             break
         case 1:
             console.log('+40 AP!')
-            console.log(`${player.ap} => ${player.ap + 50}`)
+            console.log(`${player.ap} => ${player.ap + 40}`)
             player.ap += 40
             break
         case 2:
@@ -91,8 +91,7 @@ const welcome = async () => {
     br()
     console.log('Get ready...')
     console.log('The game is about to start ^^')
-    await sleep()
-    await sleep()
+    await sleep(6_000)
 }
 
 const fight_turn = async (player, enemie) => {
