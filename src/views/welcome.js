@@ -50,7 +50,7 @@ export const welcome = async () => {
 
     printStats(player)
 
-    console.log('Now, you must decide your first powerup!\n', 'Every 6 levels, you will have a powerup, think well which one to choose\n')
+    console.log('Now, you must decide your first powerup!\n', 'Every 5 levels, you will have a powerup, think well which one to choose\n')
 
     const choice = await inquirer.prompt({
         name: 'powerup',

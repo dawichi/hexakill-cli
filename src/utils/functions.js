@@ -9,6 +9,12 @@ export const tint = (text, background, color = '') => {
     return chalk[background](` ${text} `)
 }
 
+export const level_up = (player) => `
+-------------------------------------------
+LEVEL UP!!! ${player.level - 1}  =>  ${player.level}
+-------------------------------------------
+`
+
 export const printStats = player =>
     console.table({
         name: player.name,

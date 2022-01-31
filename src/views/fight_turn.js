@@ -1,10 +1,11 @@
+import chalk from 'chalk'
 import inquirer from 'inquirer'
-import { br, compareStats, sleep, tint } from '../utils/functions.js'
-import { actions } from '../utils/choices.js'
-import { enemy_attack, player_attack } from '../utils/fight.js'
-import figlet from 'figlet'
-import gradient from 'gradient-string'
+
 import { loser, winner } from './end.js'
+import { actions } from '../utils/choices.js'
+import { br, compareStats, sleep, tint } from '../utils/functions.js'
+
+// TODO: refactor this file 
 
 const player_action = async (player, enemy) => {
     console.log(`Hey ${tint(player.name, 'bgGreen')}, is your turn!`)
@@ -19,12 +20,27 @@ const player_action = async (player, enemy) => {
     const choice = actions.indexOf(action.action)
 
     if (choice === 0) {
-        console.log('You are attacking!')
-        player_attack(player, enemy)
+        console.log(`You are ${chalk.red('attacking')}!`)
+        const damage = player.attack()
+        if (damage === 0) {
+            console.log('Your attack missed!')
+        } else {
+            console.log(`You made ${tint(damage - enemy.armor, 'bgGreen', 'black')} of damage!`)
+            enemy.recieveAttack(damage)
+            console.log(`${enemy.name} hp: ${tint(`${enemy.health - enemy.dmgRecieved} / ${enemy.health}`, 'bgRed')}`)
+        }
     } else if (choice === 1) {
-        console.log('You are using magic!')
-        player_attack(player, enemy)
+        console.log(`You are using ${chalk.blue('magic')}!`)
+        const damage = player.magic()
+        if (damage === 0) {
+            console.log('Your magic missed!')
+        } else {
+            console.log(`You made ${tint(damage - enemy.mr, 'bgGreen', 'black')} of damage!`)
+            enemy.recieveMagic(damage)
+            console.log(`${enemy.name} hp: ${tint(`${enemy.health - enemy.dmgRecieved} / ${enemy.health}`, 'bgRed')}`)
+        }
     } else {
+        console.log('You healed!')
         player.heal()
     }
 
@@ -40,16 +56,30 @@ const enemy_action = async (player, enemy) => {
     await sleep()
 
     if (choice === 0) {
-        console.log('He is attacking!')
-        enemy_attack(player, enemy)
+        console.log(`The ${tint(enemy.name, 'bgRed')} is going to ${chalk.red('attack')}!`)
+        const damage = enemy.attack()
+		if (damage) {
+			console.log(`His ${chalk.red('attack')} missed!`)
+		} else {
+			console.log(`Slime made ${tint(damage - player.armor, 'bgRed')} of damage!`)
+			player.recieveAttack(damage)
+			console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
+		}
     } else if (choice === 1) {
-        console.log('He is using magic!')
-        enemy_attack(player, enemy)
+        console.log(`The ${tint(enemy.name, 'bgRed')} is going to use ${chalk.blue('magic')}!`)
+        const damage = enemy.magic()
+		if (damage === 0) {
+			console.log(`His ${chalk.blue('magic')} missed!`)
+		} else {
+			console.log(`Slime made ${tint(damage - player.mr, 'bgRed')} of damage!`)
+			player.recieveMagic(damage)
+			console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
+		}
     } else {
-        console.log('Enemy healed himself!')
+        console.log('Enemy healed!')
         enemy.heal()
     }
-
+    await sleep(3000)
     br()
 }
 

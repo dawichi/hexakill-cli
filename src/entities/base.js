@@ -28,13 +28,14 @@ export class Base_Entity {
         if (this.exp + exp > 100) {
             this._levelUp()
             this.exp += exp - 100
+			return true
         } else {
             this.exp += exp
+			return false
         }
     }
 
     _getDamage(damage) {
-        damage = parseInt(damage)
         if (this.dmgRecieved + damage >= this.health) {
             this.dmgRecieved = this.health
             // it's dead now
@@ -47,14 +48,12 @@ export class Base_Entity {
     }
 
     recieveAttack(damage) {
-        damage = parseInt(damage)
         if (damage > this.armor) {
             this._getDamage(damage - this.armor)
         }
     }
 
     recieveMagic(damage) {
-        damage = parseInt(damage)
         if (damage > this.mr) {
             this._getDamage(damage - this.mr)
         }
@@ -65,7 +64,7 @@ export class Base_Entity {
         const min_hit = this.ad * 0.8
         const max_hit = this.ad * 1.4
         // Calc damage between the range
-        const damage = (Math.floor(Math.random() * (max_hit - min_hit + 1)) + min_hit).toFixed(0)
+        const damage = parseInt((Math.floor(Math.random() * (max_hit - min_hit + 1)) + min_hit).toFixed(0))
         // Calc the chances. 10% critic, 10% misses
         const chances = Math.random()
         const critic = chances > 0.9
@@ -81,7 +80,7 @@ export class Base_Entity {
         const min_hit = this.ad * 0.3
         const max_hit = this.ad * 2
         // Calc damage between the range
-        const damage = (Math.floor(Math.random() * (max_hit - min_hit + 1)) + min_hit).toFixed(0)
+        const damage = parseInt((Math.floor(Math.random() * (max_hit - min_hit + 1)) + min_hit).toFixed(0))
         // Calc the chances. 40% critic, 30% misses
         const chances = Math.random()
         const critic = chances > 0.6
@@ -93,11 +92,11 @@ export class Base_Entity {
     }
 
     heal() {
-        // Range of heal, [30% to 60%] of total HP
-        const min_heal = this.health * 0.3
-        const max_heal = this.health * 0.6
+        // Range of heal, [20% to 40%] of dmgRecieved
+        const min_heal = this.dmgRecieved * 0.2
+        const max_heal = this.dmgRecieved * 0.4
         // Calc heal between the range
-        const heal = (Math.floor(Math.random() * (max_heal - min_heal + 1)) + min_heal).toFixed(0)
+        const heal = parseInt((Math.floor(Math.random() * (max_heal - min_heal + 1)) + min_heal).toFixed(0))
         this.dmgRecieved -= heal
         if (this.dmgRecieved < 0) {
             this.dmgRecieved = 0
