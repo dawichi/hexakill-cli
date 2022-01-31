@@ -1,8 +1,17 @@
 import chalk from 'chalk'
+import inquirer from 'inquirer'
 
 export const sleep = (ms = 2000) => new Promise(r => setTimeout(r, ms))
 
 export const br = () => console.log('------------------------------------------------------------------------------')
+
+export const pause = async () => {
+	const pause = await inquirer.prompt({
+		name: 'pause',
+		type: 'input',
+		message: 'Press ENTER to continue...',
+	})
+}
 
 export const tint = (text, background, color = '') => {
     if (color) return chalk[background](` ${chalk[color](text)} `)
@@ -24,7 +33,7 @@ export const printStats = player =>
         AP: player.ap,
         armor: player.armor,
         MR: player.mr,
-        exp: player.exp,
+        exp: `${player.exp}/100`,
     })
 
 export const compareStats = (player, enemy) =>
@@ -37,7 +46,7 @@ export const compareStats = (player, enemy) =>
             AP: player.ap,
             armor: player.armor,
             MR: player.mr,
-            exp: player.exp,
+            exp: `${player.exp}/100`,
         },
         {
             name: enemy.name,
@@ -47,6 +56,6 @@ export const compareStats = (player, enemy) =>
             AP: enemy.ap,
             armor: enemy.armor,
             MR: enemy.mr,
-            exp: enemy.exp,
+            exp: `${player.exp}/100`,
         },
     ])

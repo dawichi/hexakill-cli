@@ -14,6 +14,7 @@ import { welcome } from './views/welcome.js'
 import { Slime } from './entities/enemies.js'
 import { fight_turn } from './views/fight_turn.js'
 import { br, compareStats, level_up, sleep, tint } from './utils/functions.js'
+import figlet from 'figlet'
 
 const fight = async (player, enemy) => {
     // init the combat
@@ -29,10 +30,14 @@ const fight = async (player, enemy) => {
             console.log(`${player.name} exp: ${player.exp}/100 => ${player.exp + exp_gained}/100 \n\n\n`)
             const levelup = player.gainExp(exp_gained)
             if (levelup) {
-                console.log(
-					gradient.cristal.multiline(level_up(player)),
-					'You level up! Well done! ^^'
-				)
+                console.log(gradient.cristal.multiline(level_up(player)), 'You level up! Well done! ^^')
+                if (player.level > 18) {
+                    figlet('winner', (err, data) => {
+                        console.log(gradient.pastel.multiline(data) + '\n')
+                        console.log(chalk.green(`Congrats ${player.name}! You have won hexakill!`))
+                        process.exit(0)
+                    })
+                }
             }
             await sleep(4000)
             combat = false
@@ -46,7 +51,7 @@ const fight = async (player, enemy) => {
 const run = async () => {
     console.clear()
     let player = await welcome()
-    // player = new Character('Dawichi')
+    // let player = new Character('Dawichi')
 
     let enemy
     let playing = true
@@ -64,10 +69,6 @@ const run = async () => {
         // lets fight it!
         await fight(player, enemy)
     }
-
-    console.log('END OF THE GAME')
-    console.log('END OF THE GAME')
-    console.log('END OF THE GAME')
     console.log('END OF THE GAME')
 }
 

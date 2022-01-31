@@ -3,7 +3,7 @@ import chalkAnimation from 'chalk-animation'
 import inquirer from 'inquirer'
 import { Character } from '../entities/character.js'
 import { powerups } from '../utils/choices.js'
-import { br, printStats, sleep, tint } from '../utils/functions.js'
+import { br, pause, printStats, sleep, tint } from '../utils/functions.js'
 
 export const welcome = async () => {
     let player
@@ -13,6 +13,8 @@ export const welcome = async () => {
     await sleep()
     title.stop()
     subtitle.stop()
+
+    // Presentation
     console.log(
         `${tint('HOW TO PLAY: ', 'bgGreen', 'black')}\n\n`,
         `In ${tint('hexakill CLI', 'bgRed')} you will need to farm to level up your character\n`,
@@ -94,7 +96,8 @@ export const welcome = async () => {
 
     br()
     console.log('Get ready...')
-    console.log('The game is about to start ^^')
-    await sleep(6_000)
+    console.log('The game is about to start...')
+    await sleep()
+	await pause()
     return player
 }
