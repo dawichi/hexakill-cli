@@ -64,7 +64,7 @@ const welcome = async () => {
 
     console.log('-------------------------------------------')
 
-    const option_idx = options.indexOf(choice.powerup)
+    const option_idx = powerups.indexOf(choice.powerup)
 
     switch (option_idx) {
         case 0:
@@ -88,60 +88,73 @@ const welcome = async () => {
             break
     }
 
-    console.log('-------------------------------------------')
-
+    br()
     console.log('Get ready...')
-    await sleep()
     console.log('The game is about to start ^^')
     await sleep()
 }
 
-
-const fight = async () => {
-	console.log(`Careful! One ${tint(`${enemie.name} lv ${enemie.level}`, 'bgRed')} has appeared!`)
-	compareStats(player, enemie)
-	br()
-	await sleep()
-	fight_turn()
-}
-
-const fight_turn = async () => {
-	const action = await inquirer.prompt({
-		name: 'action',
+const fight_turn = async (player, enemie) => {
+    console.log(`Hey ${tint(player.name, 'bgGreen')}, is your turn!`)
+    const action = await inquirer.prompt({
+        name: 'action',
         type: 'list',
         message: 'What would you like to do?',
         choices: actions,
     })
-	const choice = actions.indexOf(action.action)
+    const player_action = actions.indexOf(action.action)
 
-	switch (choice) {
-		case 0:
-			break;
+	// Generate the 33% random enemie action
+    const enemie_action_generator = Math.random()
 	
-		default:
-			break;
+	if (player_action === 0) {
+		console.log('You are attacking!')
+		player_attack(player, enemie)
+	} else if (player_action === 1) {
+		console.log('You are using magic!')
+		player_attack(player, enemie)
+	} else {
+		player.heal()
 	}
 	
-	
-    enemie_attack(player, enemie)
-    player_attack(player, enemie)
-	console.table({
-		enemie: '200/2000',
-        player: '4234',
-    })
-    await sleep()
-    enemie_attack(player, enemie)
-    player_attack(player, enemie)
-    br()
+	br()
+	console.log('Enemie is thinking...')
+	const enemie_action = enemie_action_generator < 0.33 ? 0 : enemie_action_generator < 0.66 ? 1 : 2
+	await sleep()
+
+	if (enemie_action === 0) {
+		console.log('He is attacking!')
+		enemie_attack(player, enemie)
+	} else if (player_action === 1) {
+		console.log('He is using magic!')
+		enemie_attack(player, enemie)
+	} else {
+		console.log('Enemie healed himself!')
+		enemie.heal()
+	}
+
+	console.log('\n\n\n\n')
+    compareStats(player, enemie)
 }
 
 const run = async () => {
-	console.clear()
+    console.clear()
     // await welcome()
     player = new Character('Dawichi')
-    console.clear()
-	const enemie = new Slime()
-    await fight()
+
+	// present the enemie
+    const enemie = new Slime()
+	console.clear()
+    console.log(`Careful! One ${tint(`${enemie.name} lv ${enemie.level}`, 'bgRed')} has appeared!`)
+    compareStats(player, enemie)
+    br()
+    await sleep()
+
+	// init the combar
+	let playing = true
+	while (playing) {
+		await fight_turn(player, enemie)
+	}
 }
 
 run()

@@ -26,14 +26,14 @@ export class Base_Entity {
         if (this.level < 18) {
             this.level++
             this.health += 200 * this.level * 0.1
-            this.ad += 40 * this.level * 0.1
+            this.ad += 30 * this.level * 0.1
             this.ap += 40 * this.level * 0.1
             this.armor += 10 * this.level * 0.1
             this.mr += 10 * this.level * 0.1
         }
     }
 
-    getDamage(damage) {
+    _getDamage(damage) {
         damage = parseInt(damage)
         if (this.dmgRecieved + damage >= this.health) {
             this.dmgRecieved = this.health
@@ -46,8 +46,16 @@ export class Base_Entity {
         }
     }
 
+	recieveAttack(damage) {
+		this._getDamage(parseInt(damage) - this.armor)
+	}
+
+	recieveMagic(damage) {
+		this._getDamage(parseInt(damage) - this.mr)
+	}
+
     attack() {
-        // Range of damage, [0.8 to 1.4] AD dmg
+        // Range of damage, [80% to 140%] of AD
         const min_hit = this.ad * 0.8
         const max_hit = this.ad * 1.4
         // Calc damage between the range
@@ -61,4 +69,33 @@ export class Base_Entity {
         if (critic) return damage * 2
         return damage
     }
+
+	magic() {
+        // Range of damage, [30% to 200%] of AP
+        const min_hit = this.ad * 0.3
+        const max_hit = this.ad * 2
+        // Calc damage between the range
+        const damage = (Math.floor(Math.random() * (max_hit - min_hit + 1)) + min_hit).toFixed(0)
+        // Calc the chances. 10% critic, 10% misses
+        const chances = Math.random()
+        const critic = chances > 0.6
+        const misses = chances < 0.3
+        // return the correct damage done
+        if (misses) return 0
+        if (critic) return damage * 2
+        return damage
+    }
+
+	heal() {
+        // Range of heal, [30% to 60%] of total HP
+        const min_heal = this.health * 0.30
+        const max_heal = this.ad * 0.6
+        // Calc heal between the range
+        const heal = (Math.floor(Math.random() * (max_heal - min_heal + 1)) + min_heal).toFixed(0)
+		this.dmgRecieved -= heal
+		if (this.dmgRecieved < 0) {
+			this.dmgRecieved = 0
+		}
+		console.log('Healed: ' + heal)
+	}
 }
