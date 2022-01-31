@@ -33,10 +33,11 @@ const welcome = async () => {
     subtitle.stop()
 
     console.log(`
-		${chalk.bgGreen(chalk.black(' HOW TO PLAY: '))} 
+		${tint('HOW TO PLAY: ', 'bgGreen', 'black')}
 
-		In ${chalk.redBright('hexakill CLI')} you will need to select and build
-		the correct items for your champ to improve it's stats
+		In ${tint('hexakill CLI', 'bgRed')} you will need to farm to level up your character
+		and improve his stats. You will fight different enemies with strengths and weaknesses.
+		Play the correct damage and build the correct powerups to reach the final boss and win hexakill!
 	`)
 
     const ask_name = await inquirer.prompt({
@@ -53,12 +54,30 @@ const welcome = async () => {
     console.clear()
     console.log(`Hey ${chalk.red(player.name)}! Welcome to hexakill! \nFirst, meet your initial stats:`)
     printStats(player)
-    console.log('Before start, you must decide the build you would like to follow this time!')
+
+	br()
+	console.log(
+		'Basic info about combats:\n',
+		'Your character has a max of 18 levels available, with each level up, your stats will be improved!\n\n',
+		'In hexakill, there are 2 types of damage\n',
+		`- ${tint('Attacks', 'bgRed')}: 10% critic. 10% missing.\n`,
+		`- ${tint('Magic', 'bgBlue', 'black')}: 40% critic. 30% missing.\n\n`,
+		'Attacks scale with AD (Attack Damage) and Magic scales with AP (Ability Power)\n',
+		'it\'s on you which one priorize! But some enemies are stronger vs one specific dmg\n',
+		'Armor and MR (Magic Resist) reduces the dmg recieved by each type by a flat amount\n',
+		'NOTE: AP scales better in late levels!',
+	)
+	br()
+
+    console.log(
+		'Now, you must decide your first powerup!\n',
+		'After each 6 levels, you will have a powerup available, so think well which one to choose\n',
+	)
 
     const choice = await inquirer.prompt({
         name: 'powerup',
         type: 'list',
-        message: 'What stat would you like to powerup?',
+        message: 'What would you like to powerup?',
         choices: powerups,
     })
 
@@ -78,12 +97,19 @@ const welcome = async () => {
             player.ap += 40
             break
         case 2:
-            console.log('+15 AD and +20AP!')
+            console.log('+15 AD and +20 AP!')
             console.log(`AD: ${player.ad} => ${player.ad + 15}`)
             console.log(`AP: ${player.ap} => ${player.ap + 20}`)
             player.ad += 15
             player.ap += 20
             break
+		case 3:
+			console.log('+20 armor and +20 MR!')
+			console.log(`Armor: ${player.armor} => ${player.armor + 20}`)
+			console.log(`MR: ${player.mr} => ${player.mr + 20}`)
+			player.armor += 20
+			player.mr += 20
+			break
         default:
             break
     }

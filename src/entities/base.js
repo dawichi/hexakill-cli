@@ -1,4 +1,4 @@
-const init_stat = (num, level) => num + num * level * 0.1
+export const init_stat = (num, level) => num + num * level * 0.3
 
 export class Base_Entity {
     constructor(name, level) {
@@ -6,7 +6,7 @@ export class Base_Entity {
         this.level = level
         this.dmgRecieved = 0
         this.health = init_stat(200, level)
-        this.ad = init_stat(60, level)
+        this.ad = init_stat(40, level)
         this.ap = init_stat(20, level)
         this.armor = init_stat(10, level)
         this.mr = init_stat(10, level)
@@ -82,7 +82,7 @@ export class Base_Entity {
         const max_hit = this.ad * 2
         // Calc damage between the range
         const damage = (Math.floor(Math.random() * (max_hit - min_hit + 1)) + min_hit).toFixed(0)
-        // Calc the chances. 10% critic, 10% misses
+        // Calc the chances. 40% critic, 30% misses
         const chances = Math.random()
         const critic = chances > 0.6
         const misses = chances < 0.3
@@ -95,7 +95,7 @@ export class Base_Entity {
     heal() {
         // Range of heal, [30% to 60%] of total HP
         const min_heal = this.health * 0.3
-        const max_heal = this.ad * 0.6
+        const max_heal = this.health * 0.6
         // Calc heal between the range
         const heal = (Math.floor(Math.random() * (max_heal - min_heal + 1)) + min_heal).toFixed(0)
         this.dmgRecieved -= heal

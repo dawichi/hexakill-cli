@@ -4,6 +4,7 @@ export const powerups = [
     `${chalk.red('Attack Damage:')} always hits, always works`,
     `${chalk.blue('Ability Power:')} let\'s blow them up!`,
     `${chalk.magenta('Mixed damage:')} why not... both?`,
+    `${chalk.yellow('Resists:')} cause league of tanks`,
 ]
 
 export const actions = [
