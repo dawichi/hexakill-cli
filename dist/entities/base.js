@@ -1,4 +1,4 @@
-export const init_stat = (num, level) => parseInt((num * (Math.pow(1.2, level))).toFixed(0));
+export const init_stat = (num, level) => parseInt((num * (Math.pow(1.1, level))).toFixed(0));
 export class Base_Entity {
     constructor(name, level) {
         this.name = name;
@@ -14,11 +14,11 @@ export class Base_Entity {
     _levelUp() {
         if (this.level < 18) {
             this.level++;
-            this.health = parseInt((this.health * 1.2).toFixed(0));
+            this.health = parseInt((this.health * 1.25).toFixed(0));
             this.ad = parseInt((this.ad * 1.2).toFixed(0));
-            this.ap = parseInt((this.ap * 1.2).toFixed(0));
-            this.armor = parseInt((this.armor * 1.2).toFixed(0));
-            this.mr = parseInt((this.mr * 1.2).toFixed(0));
+            this.ap = parseInt((this.ap * 1.25).toFixed(0));
+            this.armor = parseInt((this.armor * 1.15).toFixed(0));
+            this.mr = parseInt((this.mr * 1.15).toFixed(0));
         }
     }
     gainExp(exp) {
