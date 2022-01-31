@@ -19,7 +19,7 @@
     "type": "module",
     "main": "dist/index.js",
     "scripts": {
-        "start": "node ./dist/index.js",
+        "start": "tsc && node ./dist/index.js",
         "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}"
     },
     "dependencies": {
