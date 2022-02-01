@@ -18,24 +18,18 @@ export const welcome = async () => {
 
     // Presentation
     console.log(
-        `${tint('HOW TO PLAY: ', 'bgGreen', 'black')}\n\n`,
-        `In ${tint('hexakill CLI', 'bgRed')} you will need to farm to level up your character\n`,
-        'and improve his stats. You will fight different enemies with strengths and weaknesses.\n',
-        'Play the correct damage and build the correct powerups to reach the final boss and win hexakill!\n',
+        `${chalk.green('HOW TO PLAY:')}\n\n`,
+        `In ${chalk.red('hexakill CLI')} you will need to farm to level up your character and improve his stats.\n`,
+        'You will fight different enemies with strengths and weaknesses.\n',
+        'Play the correct damage and build to reach the final boss and win hexakill!\n',
     )
     br()
     console.log(
-        'Basic info about combats:\n',
-        'Your character has a max of 18 levels available, with each level up, your stats will be improved!\n\n',
-        'In hexakill, there are 2 types of damage\n',
-        `- ${tint('Attacks', 'bgRed')}: 10% critic. 10% missing.\n`,
-        `- ${tint('Magic', 'bgBlue', 'black')}: 40% critic. 30% missing.\n\n`,
-        `${chalk.red('Attacks')} scale with ${chalk.red('AD (Attack Damage)')} and ${chalk.blue('Magic')} scales with ${chalk.blue(
-            'AP (Ability Power)',
-        )}\n`,
-        "It's on you which one priorize! But some enemies are stronger vs a specific type\n",
-        `${chalk.yellow('Armor')} and ${chalk.cyan('MR (Magic Resist)')} reduces by a flat amount the dmg recieved\n`,
-        'NOTE: AP scales better in last levels!',
+        '\n In hexakill, there are 2 types of damage:\n',
+        `- ${chalk.red('Attacks (AD)')} 10% critic. 10% missing.\n`,
+        `- ${chalk.blue('Magic (AP)')} 40% critic. 30% missing.\n\n`,
+        `It\'s on you which one priorize! Remember that some enemies are stronger vs a specific type.\n`,
+        `${chalk.yellow('Armor')} and ${chalk.cyan('Magic Resist (MR)')} reduces by a flat amount the damage recieved.\n`,
     )
     br()
     const ask_name = await inquirer.prompt({
@@ -47,28 +41,28 @@ export const welcome = async () => {
         },
     })
 
-	console.log(`Great ${ask_name.player_name}, you will have 3 different champs available`)
-	console.log(`Each one has it's unique gameplay style and benefits, so choose well!`)
+    console.log(`\nGreat ${chalk.cyan(ask_name.player_name)}, you have 3 different characters available.`)
+    console.log(`Each one has it's unique gameplay style, choose well!\n`)
 
     const ask_champ = await inquirer.prompt({
         name: 'champ',
         type: 'list',
         message: 'What type of character do you want to be?',
-		choices: characters
-	})
+        choices: characters,
+    })
 
     const characters_idx = characters.indexOf(ask_champ.champ)
-	const characters_available = [Wizard, Thieve, Barbarian]
-	const character_selection = characters_available[characters_idx]
+    const characters_available = [Wizard, Thieve, Barbarian]
+    const character_selection = characters_available[characters_idx]
 
     player = new character_selection(5, ask_name.player_name)
 
     console.clear()
-    console.log(`Hey ${chalk.red(player.name)}! Welcome to hexakill! \nFirst, meet your initial stats:`)
+    console.log(`Hey ${chalk.cyan(player.name)}! Welcome to hexakill! \nFirst, meet your initial stats:\n`)
 
     printStats(player)
 
-    console.log('Now, you must decide your first powerup!\n', 'Every 5 levels, you will have a powerup, think well which one to choose\n')
+    console.log('\nNow, you must decide your first powerup!\nEvery 5 levels, you will pick a powerup, think well which one to choose!\n')
 
     await powerup(player)
 

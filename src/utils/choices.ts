@@ -15,8 +15,8 @@ export const actions = [
 ]
 
 export const characters = [
-    `${tint('Wizard', 'bgBlue', 'black')}: destroy with explosions of AP`,
-    `${tint('Thieve', 'bgRed', 'black')}: pure AD damage, like good asassins`,
-    `${tint('Barbarian', 'bgYellow', 'black')}: oneshots are not for him, he doesn't mind`,
+    `${tint('Wizard', 'bgBlue', 'black')}: destroy with explosions of AP (weak vs AD)`,
+    `${tint('Thieve', 'bgRed', 'black')}: pure AD damage, like good asassins (weak vs AP)`,
+    `${tint('Barbarian', 'bgYellow', 'black')}: oneshots are not for him, he doesn't mind (low dmg)`,
 ]
 

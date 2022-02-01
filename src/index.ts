@@ -14,6 +14,7 @@ import { Eagle, Knight, Slime } from './entities/enemies.js'
 import { br, compareStats, sleep, tint } from './utils/functions.js'
 import { fight } from './views/fight.js'
 import { Base_Entity } from './entities/base.js'
+import chalk from 'chalk'
 
 const enemies_pool = [Eagle, Knight, Slime]
 
@@ -33,7 +34,7 @@ const run = async () => {
         enemy = new enemy_pick(enemy_level)
         // present the enemy
         console.clear()
-        console.log(`Careful! One ${tint(`${enemy.name} lv ${enemy.level}`, 'bgRed')} has appeared!`)
+        console.log(`Careful! One ${chalk.red(`lv ${enemy.level} ${enemy.name}`)} has appeared!`)
         compareStats(player, enemy)
         br()
         await sleep()

@@ -19,7 +19,7 @@ export class Character extends Base_Entity {
 
     gainExp(exp: number) {
         let exp_total = this.exp + exp
-        if (exp_total > 100) {
+        if (exp_total >= 100) {
             while (true) {
                 this._levelUp()
                 exp_total -= 100
@@ -34,19 +34,21 @@ export class Character extends Base_Entity {
     }
 }
 
-// Sick AP
+// Sick AP, low armor
 export class Wizard extends Character {
 	constructor(level: number, name: string) {
 		super(level, `${name} (Wizard)`)
-		this.ap = level * 25
+		this.ap = level * 25 // super buff
+		this.armor = level * 2 // nerf
 	}
 }
 
-// Sick AD
+// Sick AD, low MR
 export class Thieve extends Character {
 	constructor(level: number, name: string) {
 		super(level, `${name} (Thieve)`)
-		this.ad = level * 20
+		this.ad = level * 20 // super buff
+		this.mr = level * 2 // nerf
 	}
 }
 
@@ -54,8 +56,10 @@ export class Thieve extends Character {
 export class Barbarian extends Character {
 	constructor(level: number, name: string) {
 		super(level, `${name} (Barbarian)`)
-		this.health = level * 150
-		this.armor = level * 10
-		this.mr = level * 12
+		this.ad = level * 7 // nerf
+		this.ap = level * 9 // nerf
+		this.health = level * 150  // super buff
+		this.armor = level * 10  // super buff
+		this.mr = level * 12 // super buff
 	}
 }

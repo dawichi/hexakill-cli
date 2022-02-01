@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import figlet from 'figlet'
 import gradient from 'gradient-string'
 
-import { Knight, Slime } from '../entities/enemies.js'
+import { Slime } from '../entities/enemies.js'
 import { turn } from './turn.js'
 import { level_up, pause, sleep } from '../utils/functions.js'
 import { Character } from '../entities/characters.js'

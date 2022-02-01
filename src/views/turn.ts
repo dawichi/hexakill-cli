@@ -10,7 +10,7 @@ import { Slime } from '../entities/enemies.js'
 // TODO: refactor this file
 
 const player_action = async (player: Character, enemy: Slime) => {
-    console.log(`Hey ${tint(player.name, 'bgGreen', 'black')}, is your turn!\n`)
+    console.log(`Hey ${chalk.cyan(player.name)}, is your turn!\n`)
 
     const action = await inquirer.prompt({
         name: 'action',
@@ -65,7 +65,7 @@ const enemy_action = async (player: Character, enemy: Slime) => {
         choice = enemy_action_generator < 0.33 ? 0 : enemy_action_generator < 0.66 ? 1 : 2
     }
 
-    console.log('Enemy is thinking...')
+    console.log(`${chalk.red(enemy.name)} is thinking...`)
     await sleep(1000)
 
     if (choice === 0) {
@@ -89,7 +89,7 @@ const enemy_action = async (player: Character, enemy: Slime) => {
             console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
         }
     } else {
-        console.log('Enemy healed!')
+        console.log(`${chalk.red(enemy.name)} healed!`)
         console.log('Healed: ' + enemy.heal())
     }
     await sleep(1000)

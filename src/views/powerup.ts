@@ -11,7 +11,7 @@ export const powerup = async (player: Character) => {
     const choice = await inquirer.prompt({
         name: 'powerup',
         type: 'list',
-        message: 'What would you like to powerup?',
+        message: 'What powerup?',
         choices: powerups,
     })
 
