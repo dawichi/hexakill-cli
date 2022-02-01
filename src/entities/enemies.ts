@@ -16,7 +16,7 @@ export class Knight extends Base_Entity {
 		super(level, name)
 		this.health = level * 120 // buff
 		this.armor = level * 8 // buff
-		this.ap = level * 10 // nerf
+		this.ap = level * 8 // nerf
 		this.mr = level * 3 // nerf
 	}
 }

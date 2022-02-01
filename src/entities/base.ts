@@ -15,7 +15,7 @@ export class Base_Entity {
         this.health = level * 100
         this.ad = level * 10
         this.ap = level * 15
-        this.armor = level * 5
+        this.armor = level * 4
         this.mr = level * 5
     }
 
@@ -72,9 +72,9 @@ export class Base_Entity {
     }
 
     heal() {
-        // Range of heal, [20% to 40%] of dmgRecieved
-        const min_heal = this.dmgRecieved * 0.2
-        const max_heal = this.dmgRecieved * 0.4
+        // Range of heal, [10% to 30%] of dmgRecieved
+        const min_heal = this.dmgRecieved * 0.1
+        const max_heal = this.dmgRecieved * 0.3
         // Calc heal between the range
         const heal = parseInt((Math.floor(Math.random() * (max_heal - min_heal + 1)) + min_heal).toFixed(0))
         this.dmgRecieved -= heal

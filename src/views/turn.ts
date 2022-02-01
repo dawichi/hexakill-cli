@@ -96,7 +96,7 @@ const enemy_action = async (player: Character, enemy: Slime) => {
     br()
 }
 
-export const fight_turn = async (player: Character, enemy: Slime) => {
+export const turn = async (player: Character, enemy: Slime) => {
     await player_action(player, enemy)
     if (enemy.health - enemy.dmgRecieved === 0) {
         winner(enemy)
