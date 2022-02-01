@@ -55,10 +55,10 @@ const enemy_action = async (player: Character, enemy: Slime) => {
     let choice: number
     const enemy_action_generator = Math.random()
 
-    if (enemy.dmgRecieved / enemy.health < 0.2) {
+    if ((enemy.health - enemy.dmgRecieved) / enemy.health < 0.2) {
         // If less than 20% hp, always heals
         choice = 2
-    } else if (enemy.dmgRecieved / enemy.health > 0.6) {
+    } else if ((enemy.health - enemy.dmgRecieved) / enemy.health > 0.6) {
         // If more than 60% hp, never heals
         choice = enemy_action_generator < 0.5 ? 0 : 1
     } else {

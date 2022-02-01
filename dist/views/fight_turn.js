@@ -12,7 +12,7 @@ import inquirer from 'inquirer';
 import { loser, winner } from './end.js';
 import { actions } from '../utils/choices.js';
 import { br, compareStats, sleep, tint } from '../utils/functions.js';
-// TODO: refactor this file 
+// TODO: refactor this file
 const player_action = (player, enemy) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(`Hey ${tint(player.name, 'bgGreen', 'black')}, is your turn!\n`);
     const action = yield inquirer.prompt({
@@ -54,8 +54,19 @@ const player_action = (player, enemy) => __awaiter(void 0, void 0, void 0, funct
 });
 const enemy_action = (player, enemy) => __awaiter(void 0, void 0, void 0, function* () {
     // Generate a random enemy action with 33% chances in each option
+    let choice;
     const enemy_action_generator = Math.random();
-    const choice = enemy_action_generator < 0.33 ? 0 : enemy_action_generator < 0.66 ? 1 : 2;
+    if ((enemy.health - enemy.dmgRecieved) / enemy.health < 0.2) {
+        // If less than 20% hp, always heals
+        choice = 2;
+    }
+    else if ((enemy.health - enemy.dmgRecieved) / enemy.health > 0.6) {
+        // If more than 60% hp, never heals
+        choice = enemy_action_generator < 0.5 ? 0 : 1;
+    }
+    else {
+        choice = enemy_action_generator < 0.33 ? 0 : enemy_action_generator < 0.66 ? 1 : 2;
+    }
     console.log('Enemy is thinking...');
     yield sleep(1000);
     if (choice === 0) {
