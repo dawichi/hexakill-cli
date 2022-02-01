@@ -1,17 +1,16 @@
 import chalk from 'chalk'
 import inquirer from 'inquirer'
 
-import { loser, winner } from './end.js'
+import { loser, winner } from '../utils/end.js'
 import { actions } from '../utils/choices.js'
 import { br, compareStats, sleep, tint } from '../utils/functions.js'
 import { Character } from '../entities/characters.js'
-import { Slime } from '../entities/enemies.js'
+import { Base_Entity } from '../entities/base.js'
 
-// TODO: refactor this file
-
-const player_action = async (player: Character, enemy: Slime) => {
-    console.log(`Hey ${chalk.cyan(player.name)}, is your turn!\n`)
-
+// -----------------------------------------------------
+//  Returns 0/1/2 depending of the choice of the player
+// -----------------------------------------------------
+const player_action = async () => {
     const action = await inquirer.prompt({
         name: 'action',
         type: 'list',
@@ -19,39 +18,13 @@ const player_action = async (player: Character, enemy: Slime) => {
         choices: actions,
     })
 
-    const choice = actions.indexOf(action.action)
-
-    if (choice === 0) {
-        console.log(`You are ${chalk.red('attacking')}!`)
-        const damage = player.attack()
-        if (damage === 0) {
-            console.log('Your attack missed!')
-        } else {
-            console.log(`You made ${tint((damage - enemy.armor).toString(), 'bgGreen', 'black')} of damage!`)
-            enemy.recieveAttack(damage)
-            console.log(`${enemy.name} hp: ${tint(`${enemy.health - enemy.dmgRecieved} / ${enemy.health}`, 'bgRed')}`)
-        }
-    } else if (choice === 1) {
-        console.log(`You are using ${chalk.blue('magic')}!`)
-        const damage = player.magic()
-        if (damage === 0) {
-            console.log('Your magic missed!')
-        } else {
-            console.log(`You made ${tint((damage - enemy.mr).toString(), 'bgGreen', 'black')} of damage!`)
-            enemy.recieveMagic(damage)
-            console.log(`${enemy.name} hp: ${tint(`${enemy.health - enemy.dmgRecieved} / ${enemy.health}`, 'bgRed')}`)
-        }
-    } else {
-        console.log('You healed!')
-        console.log('Healed: ' + player.heal())
-    }
-
-    br()
+    return actions.indexOf(action.action)
 }
 
-const enemy_action = async (player: Character, enemy: Slime) => {
-    // Generate a random enemy action with 33% chances in each option
-
+// -----------------------------------------------------
+//  Returns 0/1/2 depending of NPC selection (~ random)
+// -----------------------------------------------------
+const enemy_action = (enemy: Base_Entity) => {
     let choice: number
     const enemy_action_generator = Math.random()
 
@@ -64,51 +37,117 @@ const enemy_action = async (player: Character, enemy: Slime) => {
     } else {
         choice = enemy_action_generator < 0.33 ? 0 : enemy_action_generator < 0.66 ? 1 : 2
     }
-
-    console.log(`${chalk.red(enemy.name)} is thinking...`)
-    await sleep(1000)
-
-    if (choice === 0) {
-        console.log(`The ${tint(enemy.name, 'bgRed')} is going to ${chalk.red('attack')}!`)
-        const damage = enemy.attack()
-        if (damage) {
-            console.log(`His ${chalk.red('attack')} missed!`)
-        } else {
-            console.log(`Slime made ${tint((damage - player.armor).toString(), 'bgRed')} of damage!`)
-            player.recieveAttack(damage)
-            console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
-        }
-    } else if (choice === 1) {
-        console.log(`The ${tint(enemy.name, 'bgRed')} is going to use ${chalk.blue('magic')}!`)
-        const damage = enemy.magic()
-        if (damage === 0) {
-            console.log(`His ${chalk.blue('magic')} missed!`)
-        } else {
-            console.log(`Slime made ${tint((damage - player.mr).toString(), 'bgRed')} of damage!`)
-            player.recieveMagic(damage)
-            console.log(`${player.name} hp: ${tint(`${player.health - player.dmgRecieved} / ${player.health}`, 'bgGreen', 'black')}`)
-        }
-    } else {
-        console.log(`${chalk.red(enemy.name)} healed!`)
-        console.log('Healed: ' + enemy.heal())
-    }
-    await sleep(1000)
-    br()
+    return choice
 }
 
-export const turn = async (player: Character, enemy: Slime) => {
-    await player_action(player, enemy)
-    if (enemy.health - enemy.dmgRecieved === 0) {
-        winner(enemy)
-        return { won: true }
+interface TurnParams {
+    entity: Base_Entity
+    rival: Base_Entity
+    is_player: boolean
+    init_phrase: string
+    attack_phrase: string
+    magic_phrase: string
+}
+
+// -----------------------------------------------------
+//  Executes a 'turn' logic checking the type of the attack (attack, magic, heal)
+// -----------------------------------------------------
+const execute_turn = async ({ entity, rival, is_player, init_phrase, attack_phrase, magic_phrase }: TurnParams) => {
+    console.log(init_phrase)
+    await sleep()
+
+    const choice = is_player ? await player_action() : enemy_action(entity)
+
+    let damage: number = 0
+    let dmgRecieved: number = 0
+
+    switch (choice) {
+        case 0:
+            console.log(attack_phrase)
+            damage = entity.attack()
+            if (!damage) {
+                console.log(`The ${chalk.red('attack')} missed!`)
+                break
+            }
+            dmgRecieved = rival.recieveAttack(damage)
+            console.log(`It did ${chalk.red(dmgRecieved.toString())} of damage!`)
+            console.log(`${rival.name} HP: ${chalk.cyan(`${rival.health - rival.dmgRecieved} / ${rival.health}`)}`)
+            break
+        case 1:
+            console.log(magic_phrase)
+            damage = entity.magic()
+            if (!damage) {
+                console.log(`The ${chalk.blue('magic')} missed!`)
+                break
+            }
+            dmgRecieved = rival.recieveMagic(damage)
+            console.log(`It did ${chalk.blue(dmgRecieved.toString())} of damage!`)
+            console.log(`${rival.name} HP: ${chalk.cyan(`${rival.health - rival.dmgRecieved} / ${rival.health}`)}`)
+            break
+        case 2:
+            console.log('Healing...')
+            console.log(chalk.cyan('Healed: ') + entity.heal())
+            break
+    }
+    br()
+	await sleep()
+}
+
+// -----------------------------------------------------
+//  The main function: depending of the speed, executes 2 turns (player and NPC) in correct order
+// -----------------------------------------------------
+export const turn = async (player: Character, enemy: Base_Entity) => {
+    const player_turn_params = {
+        entity: player,
+        rival: enemy,
+        is_player: true,
+        init_phrase: `Hey ${chalk.cyan(player.name)}, is your turn!\n`,
+        attack_phrase: `You are ${chalk.red('attacking')}!`,
+        magic_phrase: `You are using ${chalk.blue('magic')}!`,
     }
 
-    await enemy_action(player, enemy)
-    if (player.health - player.dmgRecieved === 0) {
-        loser(player)
-        return { won: false }
+    const enemy_turn_params = {
+        entity: enemy,
+        rival: player,
+        is_player: false,
+        init_phrase: `${chalk.red(enemy.name)} is thinking...\n`,
+        attack_phrase: `He is ${chalk.red('attacking')}!`,
+        magic_phrase: `He is using ${chalk.blue('magic')}!`,
     }
-    console.log('\n\n\n\n')
+
+    if (enemy.speed > player.speed) {
+        // Enemy attacks first
+        await execute_turn(enemy_turn_params)
+
+        if (player.health - player.dmgRecieved === 0) {
+            loser(player)
+            return { won: false }
+        }
+
+        await execute_turn(player_turn_params)
+
+        if (enemy.health - enemy.dmgRecieved === 0) {
+            winner(enemy)
+            return { won: true }
+        }
+    } else {
+        // player attacks first: reversed order
+        await execute_turn(player_turn_params)
+
+        if (enemy.health - enemy.dmgRecieved === 0) {
+            winner(enemy)
+            return { won: true }
+        }
+
+        await execute_turn(enemy_turn_params)
+
+        if (player.health - player.dmgRecieved === 0) {
+            loser(player)
+            return { won: false }
+        }
+    }
+
+    console.log('\n\n\n\n\n')
     compareStats(player, enemy)
     return false
 }

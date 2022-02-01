@@ -22,7 +22,7 @@ export const tint = (text: string, background: string, color: string = '') => {
 
 export const level_up = (player: Character) => `
 -------------------------------------------
-LEVEL UP!!! ${player.level - 1}  =>  ${player.level}
+LEVEL UP!!! ${player.level}
 -------------------------------------------
 `
 
@@ -35,8 +35,9 @@ export const printStats = (player: Character) =>
         AP: player.ap,
         armor: player.armor,
         MR: player.mr,
+        speed: player.speed,
     })
-//TODO:don't show Index
+
 export const compareStats = (player: Character, enemy: Slime) =>
     console.table([
         {
@@ -47,6 +48,7 @@ export const compareStats = (player: Character, enemy: Slime) =>
             AP: player.ap,
             armor: player.armor,
             MR: player.mr,
+            speed: player.speed,
             exp: `${player.exp}/100`,
         },
         {
@@ -57,5 +59,6 @@ export const compareStats = (player: Character, enemy: Slime) =>
             AP: enemy.ap,
             armor: enemy.armor,
             MR: enemy.mr,
+            speed: enemy.speed,
         },
     ])

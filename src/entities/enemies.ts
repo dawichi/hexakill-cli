@@ -7,6 +7,7 @@ export class Slime extends Base_Entity {
         this.health = level * 80 // nerf
         this.ap = level * 18 // buff
 		this.armor = level * 3 // nerf
+		this.speed = level * 4 // nerf
     }
 }
 
@@ -17,6 +18,7 @@ export class Eagle extends Base_Entity {
         this.health = level * 70 // nerf
         this.ad = level * 22 // super buff
 		this.mr = level * 3 // nerf
+		this.speed = level * 7 // nerf
 	}
 }
 
@@ -28,6 +30,7 @@ export class Knight extends Base_Entity {
 		this.armor = level * 8 // buff
 		this.ap = level * 8 // nerf
 		this.mr = level * 3 // nerf
+		this.mr = level * 2 // nerf
 	}
 }
 

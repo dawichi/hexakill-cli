@@ -49,6 +49,7 @@ export class Thieve extends Character {
 		super(level, `${name} (Thieve)`)
 		this.ad = level * 20 // super buff
 		this.mr = level * 2 // nerf
+		this.speed = level * 6 // buff
 	}
 }
 
@@ -61,5 +62,6 @@ export class Barbarian extends Character {
 		this.health = level * 150  // super buff
 		this.armor = level * 10  // super buff
 		this.mr = level * 12 // super buff
+		this.speed = level * 4 // nerf
 	}
 }

@@ -7,6 +7,7 @@ export class Base_Entity {
     ap: number
     armor: number
     mr: number
+	speed: number
 
     constructor(level: number, name: string) {
 		this.level = level
@@ -17,6 +18,7 @@ export class Base_Entity {
         this.ap = level * 15
         this.armor = level * 4
         this.mr = level * 5
+		this.speed = level * 5
     }
 
     _getDamage(damage: number) {
