@@ -1,5 +1,3 @@
-export const init_stat = (num: number, level: number) => parseInt((num * 1.1 ** level).toFixed(0))
-
 export class Base_Entity {
     name: string
     level: number
@@ -9,67 +7,36 @@ export class Base_Entity {
     ap: number
     armor: number
     mr: number
-    exp: number
 
-    constructor(name: string, level: number) {
+    constructor(level: number, name: string) {
+		this.level = level
         this.name = name
-        this.level = level
         this.dmgRecieved = 0
-        this.health = init_stat(200, level)
-        this.ad = init_stat(40, level)
-        this.ap = init_stat(20, level)
-        this.armor = init_stat(10, level)
-        this.mr = init_stat(10, level)
-        this.exp = init_stat(0, level)
-    }
-
-    _levelUp() {
-        if (this.level < 18) {
-            this.level++
-            this.health = parseInt((this.health * 1.25).toFixed(0))
-            this.ad = parseInt((this.ad * 1.2).toFixed(0))
-            this.ap = parseInt((this.ap * 1.25).toFixed(0))
-            this.armor = parseInt((this.armor * 1.15).toFixed(0))
-            this.mr = parseInt((this.mr * 1.15).toFixed(0))
-        }
-    }
-
-    gainExp(exp: number) {
-        let exp_total = this.exp + exp
-        if (exp_total > 100) {
-            while (true) {
-                this._levelUp()
-                exp_total -= 100
-                if (exp_total < 100) break
-            }
-            this.exp = exp_total
-            return true
-        } else {
-            this.exp += exp
-            return false
-        }
+        this.health = level * 100
+        this.ad = level * 10
+        this.ap = level * 15
+        this.armor = level * 5
+        this.mr = level * 5
     }
 
     _getDamage(damage: number) {
-        if (this.dmgRecieved + damage >= this.health) {
-            // it's dead now
-            this.dmgRecieved = this.health
-        } else {
-            // still alive
-            this.dmgRecieved += damage
-        }
+        this.dmgRecieved += damage
+        // If dies, HP counter shows 0 HP, not negative HP
+        if (this.dmgRecieved > this.health) this.dmgRecieved = this.health
     }
 
     recieveAttack(damage: number) {
-        if (damage > this.armor) {
-            this._getDamage(damage - this.armor)
-        }
+        let dmg = damage - this.armor
+        if (dmg < 0) dmg = 0
+        this._getDamage(dmg)
+        return dmg
     }
 
     recieveMagic(damage: number) {
-        if (damage > this.mr) {
-            this._getDamage(damage - this.mr)
-        }
+        let dmg = damage - this.mr
+        if (dmg < 0) dmg = 0
+        this._getDamage(dmg)
+        return dmg
     }
 
     attack() {

@@ -13,9 +13,9 @@ import figlet from 'figlet'
 import gradient from 'gradient-string'
 
 import { welcome } from './views/welcome.js'
-import { Slime } from './entities/enemies.js'
+import { Knight, Slime } from './entities/enemies.js'
 import { fight_turn } from './views/fight_turn.js'
-import { br, compareStats, level_up, sleep, tint } from './utils/functions.js'
+import { br, compareStats, level_up, pause, sleep, tint } from './utils/functions.js'
 import { Character } from './entities/character.js'
 
 const fight = async (player: Character, enemy: Slime) => {
@@ -28,11 +28,11 @@ const fight = async (player: Character, enemy: Slime) => {
             await sleep(3000)
             console.clear()
             const exp_gained = parseInt(((enemy.health / player.level) * 2).toFixed(0))
-            console.log(`\n\n\n Well played! You have gained ${chalk.green(exp_gained)}`)
-            console.log(`${player.name} exp: ${player.exp}/100 => ${player.exp + exp_gained}/100 \n\n\n`)
+            console.log(`\n\n\n Well played! You have gained ${chalk.green(exp_gained + ' exp')}`)
+            console.log(`\t ${player.exp}/100 => ${player.exp + exp_gained}/100 \n\n\n`)
             const levelup = player.gainExp(exp_gained)
             if (levelup) {
-                console.log(gradient.cristal.multiline(level_up(player)), 'You level up! Well done! ^^')
+                console.log(gradient.cristal.multiline(level_up(player)), 'You level up! Well done! ^^\n\n')
                 if (player.level >= 18) {
                     figlet(`winner, ${player.name}`, (err, data) => {
                         console.log(gradient.pastel.multiline(data) + '\n')
@@ -41,7 +41,7 @@ const fight = async (player: Character, enemy: Slime) => {
                     })
                 }
             }
-            await sleep(4000)
+            await pause()
             combat = false
         } else {
             console.log('Better luck next time!!!\n\n')
@@ -61,7 +61,7 @@ const run = async () => {
         const min_enemy_level = Math.floor(player.level / 2)
         const max_enemy_level = player.level * 2
         const enemy_level = parseInt((Math.floor(Math.random() * (max_enemy_level - min_enemy_level + 1)) + min_enemy_level).toFixed(0))
-        enemy = new Slime('Slime', enemy_level)
+        enemy = new Knight(enemy_level)
         // present the enemy
         console.clear()
         console.log(`Careful! One ${tint(`${enemy.name} lv ${enemy.level}`, 'bgRed')} has appeared!`)
