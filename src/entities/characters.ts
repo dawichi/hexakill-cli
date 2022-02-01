@@ -35,25 +35,25 @@ export class Character extends Base_Entity {
 }
 
 // Sick AP
-class Wizard extends Character {
+export class Wizard extends Character {
 	constructor(level: number, name: string) {
-		super(level, name)
+		super(level, `${name} (Wizard)`)
 		this.ap = level * 25
 	}
 }
 
 // Sick AD
-class Thieve extends Character {
+export class Thieve extends Character {
 	constructor(level: number, name: string) {
-		super(level, name)
+		super(level, `${name} (Thieve)`)
 		this.ad = level * 20
 	}
 }
 
 // Sick resists and HP
-class Barbarian extends Character {
+export class Barbarian extends Character {
 	constructor(level: number, name: string) {
-		super(level, name)
+		super(level, `${name} (Barbarian)`)
 		this.health = level * 150
 		this.armor = level * 10
 		this.mr = level * 12

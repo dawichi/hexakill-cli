@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { tint } from './functions'
+import { tint } from './functions.js'
 
 export const powerups = [
     `${chalk.red('Attack Damage:')} always hits, always works (${chalk.red('+30% AD')})`,
@@ -15,8 +15,8 @@ export const actions = [
 ]
 
 export const characters = [
-    `${tint('Wizard', 'bgMagenta')}: destroy with explosions of AP`,
-    `${tint('Thieve', 'bgRed')}: pure AD damage, like good asassins`,
-    `${tint('Barbarian', 'bgYellow')}: oneshots are not for him, he doesn't mind`,
+    `${tint('Wizard', 'bgBlue', 'black')}: destroy with explosions of AP`,
+    `${tint('Thieve', 'bgRed', 'black')}: pure AD damage, like good asassins`,
+    `${tint('Barbarian', 'bgYellow', 'black')}: oneshots are not for him, he doesn't mind`,
 ]
 

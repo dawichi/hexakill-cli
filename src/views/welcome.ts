@@ -2,8 +2,8 @@ import chalk from 'chalk'
 import chalkAnimation from 'chalk-animation'
 import inquirer from 'inquirer'
 
-import { Character } from '../entities/characters.js'
-import { powerups } from '../utils/choices.js'
+import { Barbarian, Character, Thieve, Wizard } from '../entities/characters.js'
+import { characters } from '../utils/choices.js'
 import { br, pause, printStats, sleep, tint } from '../utils/functions.js'
 import { powerup } from './powerup.js'
 
@@ -54,10 +54,14 @@ export const welcome = async () => {
         name: 'champ',
         type: 'list',
         message: 'What type of character do you want to be?',
-		choices: 
+		choices: characters
 	})
 
-    player = new Character(ask_name.player_name)
+    const characters_idx = characters.indexOf(ask_champ.champ)
+	const characters_available = [Wizard, Thieve, Barbarian]
+	const character_selection = characters_available[characters_idx]
+
+    player = new character_selection(5, ask_name.player_name)
 
     console.clear()
     console.log(`Hey ${chalk.red(player.name)}! Welcome to hexakill! \nFirst, meet your initial stats:`)
