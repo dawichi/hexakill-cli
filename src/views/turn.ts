@@ -4,7 +4,7 @@ import inquirer from 'inquirer'
 import { loser, winner } from './end.js'
 import { actions } from '../utils/choices.js'
 import { br, compareStats, sleep, tint } from '../utils/functions.js'
-import { Character } from '../entities/character.js'
+import { Character } from '../entities/characters.js'
 import { Slime } from '../entities/enemies.js'
 
 // TODO: refactor this file

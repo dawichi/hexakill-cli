@@ -2,7 +2,7 @@ import { Base_Entity } from './base.js'
 
 export class Slime extends Base_Entity {
 	// easy to kill, but good AP
-    constructor(level: number = 1, name: string = 'Slime', ) {
+    constructor(level: number = 1, name: string = 'SLIME', ) {
         super(level, name)
         this.health = level * 80 // nerf
         this.ap = level * 18 // buff
@@ -12,7 +12,7 @@ export class Slime extends Base_Entity {
 
 export class Eagle extends Base_Entity {
 	// easy to kill, but good AD
-	constructor(level: number = 1, name: string = 'Eagle') {
+	constructor(level: number = 1, name: string = 'EAGLE') {
 		super(level, name)
         this.health = level * 70 // nerf
         this.ad = level * 22 // super buff
@@ -22,7 +22,7 @@ export class Eagle extends Base_Entity {
 
 export class Knight extends Base_Entity {
 	// hard to kill, but low AP/MR
-	constructor(level: number = 1, name: string = 'Knife') {
+	constructor(level: number = 1, name: string = 'KNIGHT') {
 		super(level, name)
 		this.health = level * 120 // buff
 		this.armor = level * 8 // buff

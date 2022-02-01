@@ -1,5 +1,5 @@
 import inquirer from 'inquirer'
-import { Character } from '../entities/character.js'
+import { Character } from '../entities/characters.js'
 import { powerups } from '../utils/choices.js'
 import { br } from '../utils/functions.js'
 

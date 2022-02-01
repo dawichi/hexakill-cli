@@ -1,5 +1,5 @@
 import gradient from 'gradient-string'
-import { Character } from '../entities/character'
+import { Character } from '../entities/characters'
 import { Slime } from '../entities/enemies'
 
 export const winner = (enemy: Slime) => {

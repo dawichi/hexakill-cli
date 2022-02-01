@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import inquirer from 'inquirer'
-import { Character } from '../entities/character'
+import { Character } from '../entities/characters'
 import { Slime } from '../entities/enemies'
 
 export const sleep = (ms = 2000) => new Promise(r => setTimeout(r, ms))

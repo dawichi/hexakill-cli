@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import chalkAnimation from 'chalk-animation'
 import inquirer from 'inquirer'
 
-import { Character } from '../entities/character.js'
+import { Character } from '../entities/characters.js'
 import { powerups } from '../utils/choices.js'
 import { br, pause, printStats, sleep, tint } from '../utils/functions.js'
 import { powerup } from './powerup.js'
@@ -46,6 +46,16 @@ export const welcome = async () => {
             return 'Player'
         },
     })
+
+	console.log(`Great ${ask_name.player_name}, you will have 3 different champs available`)
+	console.log(`Each one has it's unique gameplay style and benefits, so choose well!`)
+
+    const ask_champ = await inquirer.prompt({
+        name: 'champ',
+        type: 'list',
+        message: 'What type of character do you want to be?',
+		choices: 
+	})
 
     player = new Character(ask_name.player_name)
 

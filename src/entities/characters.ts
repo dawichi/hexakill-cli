@@ -3,8 +3,8 @@ import { Base_Entity } from './base.js'
 export class Character extends Base_Entity {
     exp: number
 
-    constructor(name: string = 'Player') {
-        super(5, name)
+    constructor(level: number, name: string) {
+        super(level, name)
         this.exp = 0
     }
 
@@ -32,4 +32,30 @@ export class Character extends Base_Entity {
             return false
         }
     }
+}
+
+// Sick AP
+class Wizard extends Character {
+	constructor(level: number, name: string) {
+		super(level, name)
+		this.ap = level * 25
+	}
+}
+
+// Sick AD
+class Thieve extends Character {
+	constructor(level: number, name: string) {
+		super(level, name)
+		this.ad = level * 20
+	}
+}
+
+// Sick resists and HP
+class Barbarian extends Character {
+	constructor(level: number, name: string) {
+		super(level, name)
+		this.health = level * 150
+		this.armor = level * 10
+		this.mr = level * 12
+	}
 }
