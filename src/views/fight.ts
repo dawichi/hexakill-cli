@@ -17,7 +17,7 @@ export const fight = async (player: Character, enemy: Slime) => {
         if (fight.won) {
             await sleep(3000)
             console.clear()
-            const exp_gained = parseInt((enemy.health / player.level).toFixed(0))
+            const exp_gained = parseInt((enemy.health / player.level).toFixed(0)) * 1.5
             console.log(`\n\n\n Well played! You have gained ${chalk.green(exp_gained + ' exp')}`)
             console.log(`\t ${player.exp}/100 => ${player.exp + exp_gained}/100 \n\n\n`)
             const levelup = player.gainExp(exp_gained)

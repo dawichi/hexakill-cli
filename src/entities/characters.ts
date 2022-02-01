@@ -15,6 +15,7 @@ export class Character extends Base_Entity {
 		this.ap += 15
 		this.armor += 5
 		this.mr += 5
+		this.speed += 5
     }
 
     gainExp(exp: number) {
