@@ -99,6 +99,6 @@ export const welcome = async () => {
     console.log('Get ready...')
     console.log('The game is about to start...')
     await sleep()
-	await pause()
+    await pause()
     return player
 }

@@ -8,11 +8,11 @@ export const sleep = (ms = 2000) => new Promise(r => setTimeout(r, ms))
 export const br = () => console.log('------------------------------------------------------------------------------')
 
 export const pause = async () => {
-	const pause = await inquirer.prompt({
-		name: 'pause',
-		type: 'input',
-		message: 'Press ENTER to continue...',
-	})
+    const pause = await inquirer.prompt({
+        name: 'pause',
+        type: 'input',
+        message: 'Press ENTER to continue...',
+    })
 }
 
 export const tint = (text: string, background: string, color: string = '') => {
@@ -35,15 +35,14 @@ export const printStats = (player: Character) =>
         AP: player.ap,
         armor: player.armor,
         MR: player.mr,
-        exp: `${player.exp}/100`,
     })
-  //TODO:don't show Index
+//TODO:don't show Index
 export const compareStats = (player: Character, enemy: Slime) =>
     console.table([
         {
             name: player.name,
             level: player.level,
-            health: `${player.health - player.dmgRecieved}/${player.health}`,
+            health: `${player.health - player.dmgRecieved} / ${player.health}`,
             AD: player.ad,
             AP: player.ap,
             armor: player.armor,
@@ -53,11 +52,10 @@ export const compareStats = (player: Character, enemy: Slime) =>
         {
             name: enemy.name,
             level: enemy.level,
-            health: `${enemy.health - enemy.dmgRecieved}/${enemy.health}`,
+            health: `${enemy.health - enemy.dmgRecieved} / ${enemy.health}`,
             AD: enemy.ad,
             AP: enemy.ap,
             armor: enemy.armor,
             MR: enemy.mr,
-            exp: ` - `,
         },
     ])

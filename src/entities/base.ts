@@ -1,4 +1,4 @@
-export const init_stat = (num: number, level: number) => parseInt((num * (1.1 ** level)).toFixed(0))
+export const init_stat = (num: number, level: number) => parseInt((num * 1.1 ** level).toFixed(0))
 
 export class Base_Entity {
     name: string

@@ -1,1 +1,0 @@
-{"version":3,"file":"character.js","sourceRoot":"","sources":["../../src/entities/character.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAa,MAAM,WAAW,CAAA;AAElD,MAAM,OAAO,SAAU,SAAQ,WAAW;IACtC,YAAY,IAAY,EAAE,QAAgB,CAAC;QACvC,KAAK,CAAC,IAAI,EAAE,KAAK,CAAC,CAAA;IACtB,CAAC;CACJ"}
