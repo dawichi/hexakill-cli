@@ -5,6 +5,7 @@ import inquirer from 'inquirer'
 import { Character } from '../entities/character.js'
 import { powerups } from '../utils/choices.js'
 import { br, pause, printStats, sleep, tint } from '../utils/functions.js'
+import { powerup } from './powerup.js'
 
 export const welcome = async () => {
     let player: Character
@@ -55,45 +56,7 @@ export const welcome = async () => {
 
     console.log('Now, you must decide your first powerup!\n', 'Every 5 levels, you will have a powerup, think well which one to choose\n')
 
-    const choice = await inquirer.prompt({
-        name: 'powerup',
-        type: 'list',
-        message: 'What would you like to powerup?',
-        choices: powerups,
-    })
-
-    br()
-
-    const option_idx = powerups.indexOf(choice.powerup)
-
-    switch (option_idx) {
-        case 0:
-            console.log('+30 AD!')
-            console.log(`${player.ad} => ${player.ad + 30}`)
-            player.ad += 30
-            break
-        case 1:
-            console.log('+40 AP!')
-            console.log(`${player.ap} => ${player.ap + 40}`)
-            player.ap += 40
-            break
-        case 2:
-            console.log('+15 AD and +20 AP!')
-            console.log(`AD: ${player.ad} => ${player.ad + 15}`)
-            console.log(`AP: ${player.ap} => ${player.ap + 20}`)
-            player.ad += 15
-            player.ap += 20
-            break
-        case 3:
-            console.log('+20 armor and +20 MR!')
-            console.log(`Armor: ${player.armor} => ${player.armor + 20}`)
-            console.log(`MR: ${player.mr} => ${player.mr + 20}`)
-            player.armor += 20
-            player.mr += 20
-            break
-        default:
-            break
-    }
+    await powerup(player)
 
     br()
     console.log('Get ready...')

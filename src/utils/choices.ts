@@ -1,10 +1,10 @@
 import chalk from 'chalk'
 
 export const powerups = [
-    `${chalk.red('Attack Damage:')} always hits, always works`,
-    `${chalk.blue('Ability Power:')} let\'s blow them up!`,
-    `${chalk.magenta('Mixed damage:')} why not... both?`,
-    `${chalk.yellow('Resists:')} cause league of tanks`,
+    `${chalk.red('Attack Damage:')} always hits, always works (${chalk.red('+30% AD')})`,
+    `${chalk.blue('Ability Power:')} let\'s blow them up! (${chalk.blue('+30% AP')})`,
+    `${chalk.magenta('Mixed damage:')} why not... both? (${chalk.magenta('+15% AP & AD')})`,
+    `${chalk.yellow('Resists and HP:')} cause league of tanks (${chalk.yellow('+10% resits & +15% HP')})`,
 ]
 
 export const actions = [

@@ -6,7 +6,7 @@ import { Knight, Slime } from '../entities/enemies.js'
 import { turn } from './turn.js'
 import { level_up, pause, sleep } from '../utils/functions.js'
 import { Character } from '../entities/character.js'
-
+import { powerup } from './powerup.js'
 
 export const fight = async (player: Character, enemy: Slime) => {
     // init the combat
@@ -29,6 +29,9 @@ export const fight = async (player: Character, enemy: Slime) => {
                         console.log(chalk.green(`Congrats ${player.name}! You have won hexakill!`))
                         process.exit(0)
                     })
+                } else if (player.level > 5 && !(player.level % 5)) {
+                    console.log(`\n\n\n HEY! Level ${chalk.red(player.level)}! You can pick a new ${chalk.bgRed('power up')}!`)
+                    await powerup(player)
                 }
             }
             await pause()
