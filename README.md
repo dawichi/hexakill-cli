@@ -12,3 +12,5 @@ You will need to levelup your character, facing the enemies and poweriing up the
 ![showcase](./showcase.png)
 
 ![showcase](./showcase2.png)
+
+![showcase](./showcase3.png)

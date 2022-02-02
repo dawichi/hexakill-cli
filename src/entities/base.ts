@@ -1,3 +1,7 @@
+import { config } from '../config'
+
+const base = config.base
+
 export class Base_Entity {
     name: string
     level: number
@@ -7,18 +11,18 @@ export class Base_Entity {
     ap: number
     armor: number
     mr: number
-	speed: number
+    speed: number
 
     constructor(level: number, name: string) {
-		this.level = level
+        this.level = level
         this.name = name
         this.dmgRecieved = 0
-        this.health = level * 100
-        this.ad = level * 10
-        this.ap = level * 15
-        this.armor = level * 4
-        this.mr = level * 5
-		this.speed = level * 5
+        this.health = level * base.health
+        this.ad = level * base.ad
+        this.ap = level * base.ap
+        this.armor = level * base.armor
+        this.mr = level * base.mr
+        this.speed = level * base.speed
     }
 
     _getDamage(damage: number) {

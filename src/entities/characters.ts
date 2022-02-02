@@ -1,4 +1,7 @@
 import { Base_Entity } from './base.js'
+import { config } from '../config'
+
+const base = config.base
 
 export class Character extends Base_Entity {
     exp: number
@@ -9,13 +12,13 @@ export class Character extends Base_Entity {
     }
 
     _levelUp() {
-		this.level++
-		this.health += 100
-		this.ad += 10
-		this.ap += 15
-		this.armor += 5
-		this.mr += 5
-		this.speed += 5
+        this.level++
+        this.health += base.health
+        this.ad += base.ad
+        this.ap += base.ap
+        this.armor += base.armor
+        this.mr += base.mr
+        this.speed += base.speed
     }
 
     gainExp(exp: number) {
@@ -37,32 +40,51 @@ export class Character extends Base_Entity {
 
 // Sick AP, low armor
 export class Wizard extends Character {
-	constructor(level: number, name: string) {
-		super(level, `${name} (Wizard)`)
-		this.ap = level * 25 // super buff
-		this.armor = level * 2 // nerf
-	}
+    constructor(level: number, name: string) {
+        super(level, `${name} (Wizard)`)
+    }
+
+    _levelUp() {
+        this.level++
+        this.health += base.health - 80
+        this.ad += base.ad - 5
+        this.ap += base.ap + 20
+        this.armor += base.armor
+        this.mr += base.mr
+        this.speed += base.speed
+    }
 }
 
 // Sick AD, low MR
 export class Thieve extends Character {
-	constructor(level: number, name: string) {
-		super(level, `${name} (Thieve)`)
-		this.ad = level * 20 // super buff
-		this.mr = level * 2 // nerf
-		this.speed = level * 6 // buff
-	}
+    constructor(level: number, name: string) {
+        super(level, `${name} (Thieve)`)
+    }
+
+    _levelUp() {
+        this.level++
+        this.health += base.health - 50
+        this.ad += base.ad + 20
+        this.ap += base.ap - 5
+        this.armor += base.armor
+        this.mr += base.mr
+        this.speed += base.speed + 3
+    }
 }
 
 // Sick resists and HP
 export class Barbarian extends Character {
-	constructor(level: number, name: string) {
-		super(level, `${name} (Barbarian)`)
-		this.ad = level * 7 // nerf
-		this.ap = level * 9 // nerf
-		this.health = level * 150  // super buff
-		this.armor = level * 10  // super buff
-		this.mr = level * 12 // super buff
-		this.speed = level * 4 // nerf
-	}
+    constructor(level: number, name: string) {
+        super(level, `${name} (Barbarian)`)
+    }
+
+    _levelUp() {
+        this.level++
+        this.health += base.health + 80
+        this.ad += base.ad - 5
+        this.ap += base.ap - 8
+        this.armor += base.armor + 5
+        this.mr += base.mr + 5
+        this.speed += base.speed - 3
+    }
 }
