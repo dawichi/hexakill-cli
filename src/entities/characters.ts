@@ -46,11 +46,11 @@ export class Wizard extends Character {
 
     _levelUp() {
         this.level++
-        this.health += base.health * 0.75
-        this.ad += base.ad * 0.75
+        this.health += base.health * 1.25
+        this.ad += base.ad
         this.ap += base.ap * 1.5
-        this.armor += base.armor * 0.5
-        this.mr += base.mr * 0.75
+        this.armor += base.armor * 0.75
+        this.mr += base.mr
         this.speed += base.speed
     }
 }
@@ -64,11 +64,11 @@ export class Thieve extends Character {
     _levelUp() {
         this.level++
         this.health += base.health
-        this.ad += base.ad * 1.75
-        this.ap += base.ap * 0.5
+        this.ad += base.ad * 1.25
+        this.ap += base.ap
         this.armor += base.armor * 0.75
-        this.mr += base.mr * 0.5
-        this.speed += base.speed * 1.5
+        this.mr += base.mr * 1.25
+        this.speed += base.speed * 1.25
     }
 }
 
@@ -81,10 +81,10 @@ export class Barbarian extends Character {
     _levelUp() {
         this.level++
         this.health += base.health * 1.5
-        this.ad += base.ad
-        this.ap += base.ap * 0.5
-        this.armor += base.armor * 1.5
-        this.mr += base.mr * 1.25
+        this.ad += base.ad * 1.25
+        this.ap += base.ap
+        this.armor += base.armor
+        this.mr += base.mr * 0.75
         this.speed += base.speed * 0.75
     }
 }

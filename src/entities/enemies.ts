@@ -23,7 +23,7 @@ export class Eagle extends Base_Entity {
         this.ad = level * (base.ad * 1.25)
         this.speed = level * (base.speed * 1.25)
         // - nerf
-        this.health = level * (base.health * 0.5)
+        this.health = level * (base.health * 0.75)
     }
 }
 
@@ -32,7 +32,7 @@ export class Knight extends Base_Entity {
     constructor(level: number = 1, name: string = 'KNIGHT') {
         super(level, name)
         // + buff
-        this.health = level * (base.health * 2)
+        this.health = level * (base.health * 1.5)
         this.ad = level * (base.ad * 1.25)
         this.armor = level * (base.armor * 1.25)
         // - nerf
