@@ -1,5 +1,5 @@
 import { Base_Entity } from './base.js'
-import { config } from '../config'
+import { config } from '../config.js'
 
 const base = config.base
 
