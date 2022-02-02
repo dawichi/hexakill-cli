@@ -46,7 +46,7 @@ export class Wizard extends Character {
 
     _levelUp() {
         this.level++
-        this.health += base.health * 0.5
+        this.health += base.health * 0.75
         this.ad += base.ad * 0.75
         this.ap += base.ap * 1.5
         this.armor += base.armor * 0.5
@@ -63,7 +63,7 @@ export class Thieve extends Character {
 
     _levelUp() {
         this.level++
-        this.health += base.health * 0.75
+        this.health += base.health
         this.ad += base.ad * 1.75
         this.ap += base.ap * 0.5
         this.armor += base.armor * 0.75

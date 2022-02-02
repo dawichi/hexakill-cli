@@ -8,7 +8,7 @@ export class Slime extends Base_Entity {
     constructor(level: number = 1, name: string = 'SLIME') {
         super(level, name)
         // + buff
-        this.ap = level * (base.ap * 1.75)
+        this.ap = level * (base.ap * 1.5)
         // - nerf
         this.health = level * (base.health * 0.75)
         this.armor = level * (base.armor * 0.75)
@@ -20,8 +20,8 @@ export class Eagle extends Base_Entity {
     constructor(level: number = 1, name: string = 'EAGLE') {
         super(level, name)
         // + buff
-        this.ad = level * (base.ad * 2)
-        this.speed = level * (base.speed * 2)
+        this.ad = level * (base.ad * 1.25)
+        this.speed = level * (base.speed * 1.25)
         // - nerf
         this.health = level * (base.health * 0.5)
     }
@@ -34,10 +34,10 @@ export class Knight extends Base_Entity {
         // + buff
         this.health = level * (base.health * 2)
         this.ad = level * (base.ad * 1.25)
-        this.armor = level * (base.armor * 1.5)
+        this.armor = level * (base.armor * 1.25)
         // - nerf
         this.ap = level * (base.ap * 0.5)
-        this.mr = level * (base.mr * 0.5)
-        this.speed = level * (base.speed * 0.5)
+        this.mr = level * (base.mr * 0.75)
+        this.speed = level * (base.speed * 0.75)
     }
 }
