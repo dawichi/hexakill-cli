@@ -10,12 +10,14 @@ interface configInterface {
 }
 
 export const config: configInterface = {
-    base: {
-        health: 150,
-        ad: 15,
-        ap: 18,
-        armor: 8,
-        mr: 8,
-        speed: 5,
+	base: {
+		// multiples of 4
+		// so u can multiply by: 0.75, 1.15, 1.75, ...
+        health: 200,
+        ad: 32,
+        ap: 40,
+        armor: 12,
+        mr: 12,
+        speed: 4,
     },
 }

@@ -4,44 +4,40 @@ import { config } from '../config.js'
 const base = config.base
 
 export class Slime extends Base_Entity {
-    // easy to kill, but good AP
+    // good AP  =>  but weak vs AD
     constructor(level: number = 1, name: string = 'SLIME') {
         super(level, name)
-        // buff
-        this.ap = level * (base.ap + 25)
-        // nerf
-        this.health = level * (base.health - 80)
-        this.armor = level * (base.armor - 3)
-        this.speed = level * (base.speed - 1)
+        // + buff
+        this.ap = level * (base.ap * 1.75)
+        // - nerf
+        this.health = level * (base.health * 0.75)
+        this.armor = level * (base.armor * 0.75)
     }
 }
 
 export class Eagle extends Base_Entity {
-    // easy to kill, but good AD
+    // fast and AD  =>  but low HP
     constructor(level: number = 1, name: string = 'EAGLE') {
         super(level, name)
-        // buff
-        this.ad = level * (base.ad + 15)
-        this.speed = level * (base.speed + 4)
-        // nerf
-        this.health = level * (base.health - 60)
-        this.ap = level * (base.ap - 5)
-        this.armor = level * (base.armor - 3)
-        this.mr = level * (base.mr - 4)
+        // + buff
+        this.ad = level * (base.ad * 2)
+        this.speed = level * (base.speed * 2)
+        // - nerf
+        this.health = level * (base.health * 0.5)
     }
 }
 
 export class Knight extends Base_Entity {
-    // hard to kill, but low AP/MR
+    // AD, HP and armor  =>  but low AP, MR and speed
     constructor(level: number = 1, name: string = 'KNIGHT') {
         super(level, name)
-        // buff
-        this.health = level * (base.health + 100)
-        this.ad = level * (base.ad + 5)
-        this.armor = level * (base.armor + 5)
-        // nerf
-        this.ap = level * (base.ap - 12)
-        this.mr = level * (base.mr - 3)
-        this.speed = level * (base.speed - 3)
+        // + buff
+        this.health = level * (base.health * 2)
+        this.ad = level * (base.ad * 1.25)
+        this.armor = level * (base.armor * 1.5)
+        // - nerf
+        this.ap = level * (base.ap * 0.5)
+        this.mr = level * (base.mr * 0.5)
+        this.speed = level * (base.speed * 0.5)
     }
 }
