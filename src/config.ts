@@ -13,7 +13,7 @@ export const config: configInterface = {
     base: {
         health: 150,
         ad: 15,
-        ap: 20,
+        ap: 18,
         armor: 8,
         mr: 8,
         speed: 5,
