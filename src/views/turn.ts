@@ -28,10 +28,10 @@ const enemy_action = (enemy: Base_Entity) => {
     let choice: number
     const enemy_action_generator = Math.random()
 
-    if ((enemy.health - enemy.dmgRecieved) / enemy.health < 0.2) {
+    if ((enemy.health - enemy.dmgReceived) / enemy.health < 0.2) {
         // If less than 20% hp, always heals
         choice = 2
-    } else if ((enemy.health - enemy.dmgRecieved) / enemy.health > 0.6) {
+    } else if ((enemy.health - enemy.dmgReceived) / enemy.health > 0.6) {
         // If more than 60% hp, never heals
         choice = enemy_action_generator < 0.5 ? 0 : 1
     } else {
@@ -59,7 +59,7 @@ const execute_turn = async ({ entity, rival, is_player, init_phrase, attack_phra
     const choice = is_player ? await player_action() : enemy_action(entity)
 
     let damage: number = 0
-    let dmgRecieved: number = 0
+    let dmgReceived: number = 0
 
     switch (choice) {
         case 0:
@@ -69,9 +69,9 @@ const execute_turn = async ({ entity, rival, is_player, init_phrase, attack_phra
                 console.log(`The ${chalk.red('attack')} missed!`)
                 break
             }
-            dmgRecieved = rival.recieveAttack(damage)
-            console.log(`It did ${chalk.red(dmgRecieved.toString())} of damage!`)
-            console.log(`${rival.name} HP: ${chalk.cyan(`${rival.health - rival.dmgRecieved} / ${rival.health}`)}`)
+            dmgReceived = rival.receiveAttack(damage)
+            console.log(`It did ${chalk.red(dmgReceived.toString())} of damage!`)
+            console.log(`${rival.name} HP: ${chalk.cyan(`${rival.health - rival.dmgReceived} / ${rival.health}`)}`)
             break
         case 1:
             console.log(magic_phrase)
@@ -80,9 +80,9 @@ const execute_turn = async ({ entity, rival, is_player, init_phrase, attack_phra
                 console.log(`The ${chalk.blue('magic')} missed!`)
                 break
             }
-            dmgRecieved = rival.recieveMagic(damage)
-            console.log(`It did ${chalk.blue(dmgRecieved.toString())} of damage!`)
-            console.log(`${rival.name} HP: ${chalk.cyan(`${rival.health - rival.dmgRecieved} / ${rival.health}`)}`)
+            dmgReceived = rival.receiveMagic(damage)
+            console.log(`It did ${chalk.blue(dmgReceived.toString())} of damage!`)
+            console.log(`${rival.name} HP: ${chalk.cyan(`${rival.health - rival.dmgReceived} / ${rival.health}`)}`)
             break
         case 2:
             console.log('Healing...')
@@ -119,14 +119,14 @@ export const turn = async (player: Character, enemy: Base_Entity) => {
         // Enemy attacks first
         await execute_turn(enemy_turn_params)
 
-        if (player.health - player.dmgRecieved === 0) {
+        if (player.health - player.dmgReceived === 0) {
             loser(player)
             return { won: false }
         }
 
         await execute_turn(player_turn_params)
 
-        if (enemy.health - enemy.dmgRecieved === 0) {
+        if (enemy.health - enemy.dmgReceived === 0) {
             winner(enemy)
             return { won: true }
         }
@@ -134,14 +134,14 @@ export const turn = async (player: Character, enemy: Base_Entity) => {
         // player attacks first: reversed order
         await execute_turn(player_turn_params)
 
-        if (enemy.health - enemy.dmgRecieved === 0) {
+        if (enemy.health - enemy.dmgReceived === 0) {
             winner(enemy)
             return { won: true }
         }
 
         await execute_turn(enemy_turn_params)
 
-        if (player.health - player.dmgRecieved === 0) {
+        if (player.health - player.dmgReceived === 0) {
             loser(player)
             return { won: false }
         }

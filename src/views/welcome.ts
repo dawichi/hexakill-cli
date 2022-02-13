@@ -29,7 +29,7 @@ export const welcome = async () => {
         `- ${chalk.red('Attacks (AD)')} 10% critic. 10% missing.\n`,
         `- ${chalk.blue('Magic (AP)')} 40% critic. 30% missing.\n\n`,
         `It\'s on you which one priorize! Remember that some enemies are stronger vs a specific type.\n`,
-        `${chalk.yellow('Armor')} and ${chalk.cyan('Magic Resist (MR)')} reduces by a flat amount the damage recieved.\n`,
+        `${chalk.yellow('Armor')} and ${chalk.cyan('Magic Resist (MR)')} reduces by a flat amount the damage received.\n`,
     )
     br()
     const ask_name = await inquirer.prompt({

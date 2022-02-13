@@ -30,7 +30,7 @@ export const printStats = (player: Character) =>
     console.table({
         name: player.name,
         level: player.level,
-        health: `${player.health - player.dmgRecieved}/${player.health}`,
+        health: `${player.health - player.dmgReceived}/${player.health}`,
         AD: player.ad,
         AP: player.ap,
         armor: player.armor,
@@ -43,7 +43,7 @@ export const compareStats = (player: Character, enemy: Slime) =>
         {
             name: player.name,
             level: player.level,
-            health: `${player.health - player.dmgRecieved} / ${player.health}`,
+            health: `${player.health - player.dmgReceived} / ${player.health}`,
             AD: player.ad,
             AP: player.ap,
             armor: player.armor,
@@ -54,7 +54,7 @@ export const compareStats = (player: Character, enemy: Slime) =>
         {
             name: enemy.name,
             level: enemy.level,
-            health: `${enemy.health - enemy.dmgRecieved} / ${enemy.health}`,
+            health: `${enemy.health - enemy.dmgReceived} / ${enemy.health}`,
             AD: enemy.ad,
             AP: enemy.ap,
             armor: enemy.armor,

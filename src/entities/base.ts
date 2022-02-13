@@ -5,7 +5,7 @@ const base = config.base
 export class Base_Entity {
     name: string
     level: number
-    dmgRecieved: number
+    dmgReceived: number
     health: number
     ad: number
     ap: number
@@ -16,7 +16,7 @@ export class Base_Entity {
     constructor(level: number, name: string) {
         this.level = level
         this.name = name
-        this.dmgRecieved = 0
+        this.dmgReceived = 0
         this.health = level * base.health
         this.ad = level * base.ad
         this.ap = level * base.ap
@@ -26,19 +26,19 @@ export class Base_Entity {
     }
 
     _getDamage(damage: number) {
-        this.dmgRecieved += damage
+        this.dmgReceived += damage
         // If dies, HP counter shows 0 HP, not negative HP
-        if (this.dmgRecieved > this.health) this.dmgRecieved = this.health
+        if (this.dmgReceived > this.health) this.dmgReceived = this.health
     }
 
-    recieveAttack(damage: number) {
+    receiveAttack(damage: number) {
         let dmg = damage - this.armor
         if (dmg < 0) dmg = 0
         this._getDamage(dmg)
         return dmg
     }
 
-    recieveMagic(damage: number) {
+    receiveMagic(damage: number) {
         let dmg = damage - this.mr
         if (dmg < 0) dmg = 0
         this._getDamage(dmg)
@@ -78,14 +78,14 @@ export class Base_Entity {
     }
 
     heal() {
-        // Range of heal, [10% to 30%] of dmgRecieved
-        const min_heal = this.dmgRecieved * 0.1
-        const max_heal = this.dmgRecieved * 0.3
+        // Range of heal, [10% to 30%] of dmgReceived
+        const min_heal = this.dmgReceived * 0.1
+        const max_heal = this.dmgReceived * 0.3
         // Calc heal between the range
         const heal = parseInt((Math.floor(Math.random() * (max_heal - min_heal + 1)) + min_heal).toFixed(0))
-        this.dmgRecieved -= heal
-        if (this.dmgRecieved < 0) {
-            this.dmgRecieved = 0
+        this.dmgReceived -= heal
+        if (this.dmgReceived < 0) {
+            this.dmgReceived = 0
         }
         return heal
     }
