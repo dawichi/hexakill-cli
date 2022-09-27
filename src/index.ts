@@ -13,7 +13,7 @@ import { welcome } from './views/welcome.js'
 import { Eagle, Knight, Slime } from './entities/enemies.js'
 import { br, compareStats, sleep, tint } from './utils/functions.js'
 import { fight } from './views/fight.js'
-import { Base_Entity } from './entities/base.js'
+import { BaseEntity } from './entities/base.js'
 import chalk from 'chalk'
 
 const enemies_pool = [Eagle, Knight, Slime]
@@ -22,7 +22,7 @@ const run = async () => {
     console.clear()
 
     let player = await welcome()
-    let enemy: Base_Entity
+    let enemy: BaseEntity
     let playing = true
 
     while (playing) {

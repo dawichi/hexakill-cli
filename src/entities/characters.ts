@@ -1,9 +1,7 @@
-import { Base_Entity } from './base.js'
-import { config } from '../config.js'
+import { BaseEntity } from './base.js'
+import { base } from '../config.js'
 
-const base = config.base
-
-export class Character extends Base_Entity {
+export class Character extends BaseEntity {
     exp: number
 
     constructor(level: number, name: string) {

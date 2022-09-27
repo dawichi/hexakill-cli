@@ -5,7 +5,7 @@ import { loser, winner } from '../utils/end.js'
 import { actions } from '../utils/choices.js'
 import { br, compareStats, sleep, tint } from '../utils/functions.js'
 import { Character } from '../entities/characters.js'
-import { Base_Entity } from '../entities/base.js'
+import { BaseEntity } from '../entities/base.js'
 
 // -----------------------------------------------------
 //  Returns 0/1/2 depending of the choice of the player
@@ -24,7 +24,7 @@ const player_action = async () => {
 // -----------------------------------------------------
 //  Returns 0/1/2 depending of NPC selection (~ random)
 // -----------------------------------------------------
-const enemy_action = (enemy: Base_Entity) => {
+const enemy_action = (enemy: BaseEntity) => {
     let choice: number
     const enemy_action_generator = Math.random()
 
@@ -41,8 +41,8 @@ const enemy_action = (enemy: Base_Entity) => {
 }
 
 interface TurnParams {
-    entity: Base_Entity
-    rival: Base_Entity
+    entity: BaseEntity
+    rival: BaseEntity
     is_player: boolean
     init_phrase: string
     attack_phrase: string
@@ -96,7 +96,7 @@ const execute_turn = async ({ entity, rival, is_player, init_phrase, attack_phra
 // -----------------------------------------------------
 //  The main function: depending of the speed, executes 2 turns (player and NPC) in correct order
 // -----------------------------------------------------
-export const turn = async (player: Character, enemy: Base_Entity) => {
+export const turn = async (player: Character, enemy: BaseEntity) => {
     const player_turn_params = {
         entity: player,
         rival: enemy,

@@ -1,9 +1,7 @@
-import { Base_Entity } from './base.js'
-import { config } from '../config.js'
+import { BaseEntity } from './base.js'
+import { base } from '../config.js'
 
-const base = config.base
-
-export class Slime extends Base_Entity {
+export class Slime extends BaseEntity {
     // good AP  =>  but weak vs AD
     constructor(level: number = 1, name: string = 'SLIME') {
         super(level, name)
@@ -15,7 +13,7 @@ export class Slime extends Base_Entity {
     }
 }
 
-export class Eagle extends Base_Entity {
+export class Eagle extends BaseEntity {
     // fast and AD  =>  but low HP
     constructor(level: number = 1, name: string = 'EAGLE') {
         super(level, name)
@@ -27,7 +25,7 @@ export class Eagle extends Base_Entity {
     }
 }
 
-export class Knight extends Base_Entity {
+export class Knight extends BaseEntity {
     // AD, HP and armor  =>  but low AP, MR and speed
     constructor(level: number = 1, name: string = 'KNIGHT') {
         super(level, name)

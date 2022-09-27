@@ -1,8 +1,6 @@
-import { config } from '../config.js'
+import { base } from '../config.js'
 
-const base = config.base
-
-export class Base_Entity {
+export class BaseEntity {
     name: string
     level: number
     dmgReceived: number
@@ -25,68 +23,89 @@ export class Base_Entity {
         this.speed = level * base.speed
     }
 
-    _getDamage(damage: number) {
+    /**
+     * Apply the damage to the entity
+     * taking care of not showing negative health
+     * @param damage damage to apply
+     * @returns damage done
+     */
+    private getDamage(damage: number): number {
+        if (damage < 0) damage = 0
         this.dmgReceived += damage
         // If dies, HP counter shows 0 HP, not negative HP
         if (this.dmgReceived > this.health) this.dmgReceived = this.health
+        return damage
     }
 
     receiveAttack(damage: number) {
-        let dmg = damage - this.armor
-        if (dmg < 0) dmg = 0
-        this._getDamage(dmg)
-        return dmg
+        return this.getDamage(damage - this.armor)
     }
 
     receiveMagic(damage: number) {
-        let dmg = damage - this.mr
-        if (dmg < 0) dmg = 0
-        this._getDamage(dmg)
-        return dmg
+        return this.getDamage(damage - this.mr)
+    }
+
+    /**
+     * Get a random natural number between min and max
+     * @param min min number
+     * @param max max number
+     * @returns random number
+     */
+    private numberBetween(min: number, max: number) {
+        return parseInt((Math.floor(Math.random() * (max - min + 1)) + min).toFixed(0))
+    }
+
+    /**
+     * Action logic
+     * 1. Gets a random damage between a range
+     * 2. Calcs if the action is a critic or a miss
+     * @param min_hit min hit
+     * @param max_hit max hit
+     * @param critic_chance critic chance
+     * @param misses_chance misses chance
+     * @returns damage done
+     */
+    private action(min_hit: number, max_hit: number, critic_chance: number, misses_chance: number) {
+        // Calc damage between the range
+        const damage = this.numberBetween(min_hit, max_hit)
+
+        // Calc the chances
+        const chances = Math.random()
+        const critic = chances > critic_chance
+        const misses = chances < misses_chance
+
+        // return the correct damage done
+        if (misses) return 0
+        if (critic) return damage * 2
+        return damage
     }
 
     attack() {
-        // Range of damage, [80% to 140%] of AD
-        const min_hit = this.ad * 0.8
-        const max_hit = this.ad * 1.4
-        // Calc damage between the range
-        const damage = parseInt((Math.floor(Math.random() * (max_hit - min_hit + 1)) + min_hit).toFixed(0))
-        // Calc the chances. 10% critic, 10% misses
-        const chances = Math.random()
-        const critic = chances > 0.9
-        const misses = chances < 0.1
-        // return the correct damage done
-        if (misses) return 0
-        if (critic) return damage * 2
-        return damage
+        return this.action(
+            this.ad * 0.8, // 80% ad
+            this.ad * 1.4, // 140% ad
+            0.9, // 10% top -> critic
+            0.1, // 10% low -> misses
+        )
     }
 
     magic() {
-        // Range of damage, [30% to 200%] of AP
-        const min_hit = this.ap * 0.3
-        const max_hit = this.ap * 2
-        // Calc damage between the range
-        const damage = parseInt((Math.floor(Math.random() * (max_hit - min_hit + 1)) + min_hit).toFixed(0))
-        // Calc the chances. 40% critic, 30% misses
-        const chances = Math.random()
-        const critic = chances > 0.6
-        const misses = chances < 0.3
-        // return the correct damage done
-        if (misses) return 0
-        if (critic) return damage * 2
-        return damage
+        return this.action(
+            this.ap * 0.3, // 30% ap
+            this.ap * 2.0, // 200% ap
+            0.6, // 40% top -> critic
+            0.3, // 30% low -> misses
+        )
     }
 
     heal() {
-        // Range of heal, [10% to 30%] of dmgReceived
-        const min_heal = this.dmgReceived * 0.1
-        const max_heal = this.dmgReceived * 0.3
-        // Calc heal between the range
-        const heal = parseInt((Math.floor(Math.random() * (max_heal - min_heal + 1)) + min_heal).toFixed(0))
+        const heal = this.numberBetween(
+            this.dmgReceived * 0.1, // 10% of damage received
+            this.dmgReceived * 0.3, // 30% of damage received
+        )
+
         this.dmgReceived -= heal
-        if (this.dmgReceived < 0) {
-            this.dmgReceived = 0
-        }
+        if (this.dmgReceived < 0) this.dmgReceived = 0
         return heal
     }
 }
